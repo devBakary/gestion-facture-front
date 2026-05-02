@@ -5,6 +5,7 @@ import { FacturesComponent } from './page/factures/factures.component';
 import { DetailFactureComponent } from './page/detail-facture/detail-facture.component';
 import { AddFacturesComponent } from './page/add-factures/add-factures.component';
 import { LoginComponent } from './page/login/login.component';
+import { authGuard } from './Config/auth.guard';
 
 export const routes: Routes = [
   {
@@ -26,7 +27,8 @@ export const routes: Routes = [
       },
       {
         path: "detail/:id",
-        component: DetailFactureComponent
+        component: DetailFactureComponent,
+        //  canActivate:[authGuard(['ADMIN', 'USER'])]
       },
       {
         path: "add-facture",

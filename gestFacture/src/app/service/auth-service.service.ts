@@ -12,7 +12,11 @@ export class AuthServiceService {
   constructor(private http: HttpClient) {}
 
   login(data: any): Observable<any>{
-    return this.http.post(`${this.api}/login`, data,{ responseType: 'text' } );
+    return this.http.post(`${this.api}/login`, data );
+  }
+
+    getMe() : Observable<any>{
+    return this.http.get<any>(`${this.api}/me`);
   }
 
   saveToken(token: string) {
@@ -29,4 +33,11 @@ export class AuthServiceService {
   isLoggedIn(): boolean {
   return !!this.getToken();
 }
+  saveUser(user: any) {
+    localStorage.setItem('user', JSON.stringify(user));
+  }
+
+  getUser() {
+    return JSON.parse(localStorage.getItem('user') || '{}');
+  }
 }

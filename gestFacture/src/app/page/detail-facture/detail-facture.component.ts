@@ -2,6 +2,7 @@ import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { FacturesService } from '../../service/factures.service';
+import { AuthServiceService } from '../../service/auth-service.service';
 
 @Component({
   selector: 'app-detail-facture',
@@ -16,12 +17,15 @@ export class DetailFactureComponent {
   factures: any
   articles: any
   constructor(private route: ActivatedRoute,
-              private service: FacturesService
+              private service: FacturesService,
+              private authService: AuthServiceService
   ){}
 
   ngOnInit(){
     this.factureId = this.route.snapshot.params['id'];
     this.loadDocuments();
+    const user = this.authService.getUser();
+    console.log(user)
   }
 
    loadDocuments(){

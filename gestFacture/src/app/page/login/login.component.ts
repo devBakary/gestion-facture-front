@@ -12,7 +12,7 @@ import { FormsModule } from '@angular/forms';
   styleUrl: './login.component.scss'
 })
 export class LoginComponent {
-form = {
+  form = {
     username: '',
     password: ''
   };
@@ -23,7 +23,7 @@ form = {
   constructor(
     private authService: AuthServiceService,
     private router: Router
-  ) {}
+  ) { }
 
   login() {
     this.loading = true;
@@ -31,10 +31,21 @@ form = {
     console.log(this.form)
 
     this.authService.login(this.form).subscribe({
-      
+
       next: (res: any) => {
-        this.authService.saveToken(res);
-        this.router.navigate(['/factures']);
+        console.log("LOGIN RESPONSE BRUT :", res);
+
+        this.authService.saveToken(res.token);
+
+        this.authService.getMe().subscribe(user => {
+
+          console.log('USER CONNECTE:', user);
+
+          this.authService.saveUser(user);
+
+          this.router.navigate(['/dashboard']);
+        });
+
       },
       error: () => {
         this.error = 'Identifiants incorrects';
