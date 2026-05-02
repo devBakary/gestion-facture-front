@@ -1,0 +1,90 @@
+<div class="page">
+
+
+    <!-- HEADER -->
+    <div class="header">
+        <button class="circle-btn back-btn">
+            ←
+        </button>
+
+        <h3>Nouvelle facture</h3>
+
+        <button class="circle-btn save-btn" (click)="saveFacture()">
+            💾
+        </button>
+    </div>
+    <div class="progress-container" [ngClass]="{'active': isLoading}">
+        <div class="progress-bar"></div>
+    </div>
+
+
+    <!-- FORM -->
+    <div class="form-container">
+
+        <!-- Correspondance client -->
+        <div class="card">
+            <div class="mb-1">
+                <label>Nom et Prenom du client</label>
+                <input type="text" placeholder="Ex: Mamady Camara" [(ngModel)]="nomClient">
+            </div>
+            <div class="mb-1">
+                <label>Numero de telephone</label>
+                <input type="text" placeholder="Ex: 79202020" [(ngModel)]="telephone">
+            </div>
+            <div>
+                <label>Adresse</label>
+                <input type="text" placeholder="Ex: Golf" [(ngModel)]="adresse">
+            </div>
+        </div>
+
+
+        <!-- Articles -->
+        <div class="card">
+            <h4>Articles</h4>
+
+            <div class="line-card" *ngFor="let ligne of lignes; let i = index">
+
+                <small>LIGNE {{ i + 1 }}</small>
+
+                <input type="text" placeholder="Designation du produit" [(ngModel)]="ligne.description">
+
+                <div class="row">
+                    <div>
+                        <label>QUANTITÉ</label>
+                        <input type="number" [(ngModel)]="ligne.quantite">
+                    </div>
+
+                    <div>
+                        <label>PRIX (FCFA)</label>
+                        <input type="number" [(ngModel)]="ligne.prix">
+                    </div>
+                </div>
+
+                <div class="line-total">
+                    = {{ ligne.quantite * ligne.prix | number }} FCFA
+                </div>
+            </div>
+
+
+            <!-- Add line -->
+            <button class="add-line-btn" (click)="addLine()">
+                + Ajouter une ligne
+            </button>
+
+        </div>
+        <div class="card mb-3">
+            <div class="total-card">
+                Total = {{ getTotalFacture() | number }} FCFA
+            </div>
+        </div>
+
+
+
+        <!-- Add facture -->
+        <button class="add-facture-btn" (click)="saveFacture()">
+            💾 Enregistrer la facture
+        </button>
+
+    </div>
+
+</div>

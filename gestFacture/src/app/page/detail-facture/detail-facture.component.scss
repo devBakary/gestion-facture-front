@@ -1,0 +1,252 @@
+.detail-page {
+    min-height: 100vh;
+    background: #eef2f5;
+    padding-bottom: 100px;
+    font-family: Arial, sans-serif;
+}
+
+/* HEADER */
+
+.header {
+    height: 80px;
+    background: #162a57;
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 20px;
+}
+
+.header h4 {
+    font-size: 12px;
+    font-weight: 600;
+}
+
+.circle-btn {
+    width: 34px;
+    height: 34px;
+    border-radius: 50%;
+    border: none;
+    color: white;
+    cursor: pointer;
+}
+
+.back-btn {
+    background: rgba(255,255,255,0.15);
+}
+
+.delete-btn {
+    background: #7d3a64;
+}
+
+/* TOTAL CARD */
+
+.total-card {
+    background: white;
+    margin: 15px;
+    padding: 20px;
+    border-radius: 20px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+}
+
+.label {
+    font-size: 11px;
+    color: gray;
+    font-weight: 600;
+    margin: 5px;
+}
+
+.total-card h3 {
+    color: #e5a73b;
+    font-size: 28px;
+    font-weight: bold;
+    margin: 10px 0;
+}
+
+.total-card hr {
+    border: none;
+    border-top: 1px solid grey;
+    margin: 15px 0;
+}
+
+.infos {
+    display: flex;
+    justify-content: space-between;
+}
+
+.infos span {
+    font-size: 11px;
+    color: gray;
+}
+
+.infos h4 {
+    margin: 5px 0;
+    color: #162a57;
+    font-size: 14px;
+}
+
+.date-box {
+    text-align: right;
+}
+
+/* STATUS */
+
+.status-list {
+    display: flex;
+    gap: 5px;
+    overflow-x: auto;
+    padding: 0 10px;
+    margin: 10px;
+    justify-content: space-between;
+}
+
+.status-list button {
+    border: none;
+    background: white;
+    padding: 10px;
+    border-radius: 20px;
+    color: #5c5c5c;
+    white-space: nowrap;
+}
+
+.status-list button.active {
+    background: #081b44;
+    color: white;
+}
+
+/* ARTICLES */
+
+.article-card {
+    background: white;
+    margin: 15px;
+    padding: 20px;
+    border-radius: 20px;
+}
+
+.article-card h3 {
+    margin-bottom: 20px;
+    color: #162a57;
+}
+
+.article-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.article-item h4 {
+    margin: 0;
+    
+}
+
+.article-item p {
+    font-size: 12px;
+    color: gray;
+    margin-top: 5px;
+    border-bottom: 1px solid grey;
+    width: 100px;
+}
+.no-print{
+     display: flex;
+    justify-content: space-between;
+    gap: 15px;
+    padding: 15px;
+    
+}
+.no-print button {
+    width: 100%;
+    height: 50px;
+    border: none;
+    border-radius: 16px;
+    background: linear-gradient(135deg, #162a57, #1f3c88, #2948a3);
+    color: white;
+    font-weight: 600;
+    font-size: 16px;
+    cursor: pointer;
+    text-align: center;
+    box-shadow: 0 6px 15px rgba(22, 42, 87, 0.25);
+    transition: all 0.3s ease;
+}
+
+.no-print .btn2{
+    background: white!important;
+    color: black;
+}
+
+// /////// le moddal
+
+.ticket-modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100vh;
+    z-index: 9999;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* fond sombre */
+.overlay {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background: rgba(0,0,0,0.6);
+}
+
+/* ticket */
+.ticket-popup {
+    position: relative;
+    background: white;
+    width: 320px;
+    padding: 15px;
+    border-radius: 10px;
+    font-family: monospace;
+    animation: pop 0.25s ease;
+}
+
+/* animation */
+@keyframes pop {
+    from {
+        transform: scale(0.8);
+        opacity: 0;
+    }
+    to {
+        transform: scale(1);
+        opacity: 1;
+    }
+}
+
+/* items */
+.item {
+    display: flex;
+    justify-content: space-between;
+    font-size: 12px;
+    margin-bottom: 5px;
+}
+
+/* actions */
+.actions {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 10px;
+}
+
+/* impression thermique */
+@media print {
+
+    .ticket-modal {
+        position: static;
+    }
+
+    .overlay,
+    .actions {
+        display: none !important;
+    }
+
+    .ticket-popup {
+        width: 58mm; /* PT-210 thermal printer */
+        box-shadow: none;
+    }
+}

@@ -1,0 +1,53 @@
+<div class="page">
+
+  <!-- HEADER -->
+  <div class="header py-4">
+    <h3>Factures</h3>
+
+    <div class="search">
+      <input type="text" placeholder="Rechercher client ou n°..." />
+    </div>
+  </div>
+
+  <!-- FILTERS -->
+  <div class="filters">
+    <button 
+      [class.active]="activeFilter === 'Toutes'"
+      (click)="setFilter('Toutes')">Toutes</button>
+
+    <button (click)="setFilter('Brouillon')">Brouillon</button>
+    <button (click)="setFilter('Envoyée')">Envoyée</button>
+    <button (click)="setFilter('Payée')">Payée</button>
+  </div>
+
+  <!-- LIST -->
+  <div class="list">
+    <div class="item" *ngFor="let f of facture" (click)="openDetail(f.id)">
+
+      <div class="left">
+        <div class="top">
+          <strong>{{ f.nomClient }}</strong>
+          <span class="badge">{{ f.numero }}</span>
+        </div>
+
+        <p>{{ f.numeroFacture }} · {{ f.dateFacture }}</p>
+      </div>
+
+      <div class="right">
+        <strong>{{ f.total | number }} FCFA</strong>
+      </div>
+
+      <div>
+        <span class="arrow">›</span>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- FLOAT BUTTON -->
+  <button class="fab">+</button>
+
+</div>
+
+<!-- NAV -->
+<!-- <app-bottom-nav></app-bottom-nav> -->

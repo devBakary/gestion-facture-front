@@ -1,0 +1,129 @@
+<div class="detail-page">
+
+    <!-- HEADER -->
+    <div class="header">
+        <button class="circle-btn back-btn">
+            ←
+        </button>
+
+        <h4 class="pt-4">{{ factures?.numeroFacture }}</h4>
+
+        <button class="circle-btn delete-btn">
+            🗑
+        </button>
+    </div>
+
+
+    <!-- TOTAL CARD -->
+    <div class="total-card">
+        <p class="label">TOTAL À PAYER</p>
+        <h3>{{ factures?.total | number }} FCFA</h3>
+
+        <hr>
+
+        <div class="infos">
+            <div>
+                <span>CLIENT</span>
+                <h4>{{ factures?.nomClient }}</h4>
+                <small>{{ factures?.numero }}</small>
+            </div>
+
+            <div class="date-box">
+                <span>DATE</span>
+                <h4>{{ factures?.dateFacture }}</h4>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- STATUS -->
+    <div class="status-list">
+        <button *ngFor="let status of statuts" [class.active]="status === facture.statut">
+            {{ status }}
+        </button>
+    </div>
+
+
+    <!-- ARTICLES -->
+    <div class="article-card">
+        <h3>Articles</h3>
+
+        <div class="article-item" *ngFor="let a of articles">
+
+            <div>
+                <h4>{{ a.description }}</h4>
+                <p>{{ a.quantite }} × {{ a.prixUnitaire | number }} FCFA</p>
+            </div>
+
+            <strong>{{ a.total | number }} FCFA</strong>
+
+        </div>
+
+    </div>
+
+    <div class="actions no-print">
+        <button (click)="openTicket()">
+            🖨 Imprimer ticket
+        </button>
+        <button class="btn2">
+            🖨 PDF
+        </button>
+
+    </div>
+
+    <!-- 🔴 MODAL OVERLAY -->
+    <div class="ticket-modal" *ngIf="printMode">
+
+        <!-- overlay -->
+        <div class="overlay" (click)="closeTicket()"></div>
+
+        <!-- ticket -->
+        <div class="ticket-popup">
+            <div class="header-ticket">
+                <h6 class="text-center">
+                    Horon Phone
+                </h6>
+                <div class="text-center">
+                    <div>Bamako Coura - 90909090</div>
+                    <small>Vente de telephone et accessoire</small>
+                </div>
+            </div>
+
+            <h4>FACTURE</h4>
+            <div>
+                <span>N°: {{ factures?.numeroFacture }}</span> 
+            </div>
+             <span>Date: {{ factures?.dateFacture }}</span>
+
+
+            <hr>
+
+            <span><strong>{{ factures?.nomClient }}</strong></span>
+
+            <hr>
+
+            <div class="items">
+                <div *ngFor="let a of articles" class="item">
+                    <span>{{ a.description }}</span>
+                    <span>{{ a.quantite }} x {{ a.prixUnitaire }}</span>
+                    <span>{{ a.quantite * a.prixUnitaire }} FCFA</span>
+                </div>
+            </div>
+
+            <hr>
+
+            <h4 class="text-center">Total: {{ factures?.total }} FCFA</h4>
+            <div class=" text-center fw-bold">Merci et a tres bientot</div>
+
+            <div class="actions">
+                <button (click)="printFacture()">🖨 Imprimer</button>
+                <button (click)="closeTicket()">Fermer</button>
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+<!-- <app-bottom-nav></app-bottom-nav> -->

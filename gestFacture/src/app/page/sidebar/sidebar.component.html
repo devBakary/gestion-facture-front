@@ -1,0 +1,24 @@
+ <main class="main-content">
+        <router-outlet></router-outlet>
+    </main>
+<div class="bottom-nav">
+  <div class="nav-item active" (click)="navigate('/home')">
+    <i class="icon">🏠</i>
+    <span>Accueil</span>
+  </div>
+
+  <div class="nav-item" (click)="navigate('/factures')">
+    <i class="icon">📄</i>
+    <span>Factures</span>
+  </div>
+
+  <div class="nav-item" (click)="navigate('/clients')">
+    <i class="icon">👥</i>
+    <span>Clients</span>
+  </div>
+
+  <div class="nav-item" (click)="navigate('/profil')">
+    <i class="icon">⚙️</i>
+    <span>Profil</span>
+  </div>
+</div>
