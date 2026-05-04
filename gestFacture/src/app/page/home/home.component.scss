@@ -31,7 +31,7 @@
 
 .status {
   background: rgba(46, 204, 113, 0.2);
-  color: #2ecc71;
+  // color: #2ecc71;
   padding: 6px 12px;
   border-radius: 20px;
   font-size: 12px;
@@ -42,9 +42,23 @@
 .status .dot {
   width: 8px;
   height: 8px;
-  background: #2ecc71;
+  // background: #2ecc71;
   border-radius: 50%;
   margin-right: 5px;
+}
+
+/* EN LIGNE */
+.online .dot {
+  background-color: #2ecc71;
+}
+
+/* HORS LIGNE */
+.offline .dot {
+  background-color: #e74c3c;
+}
+
+.online {
+  color: #2ecc71;
 }
 
 /* SALES CARD */

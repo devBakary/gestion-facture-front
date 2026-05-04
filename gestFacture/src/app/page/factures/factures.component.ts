@@ -2,11 +2,13 @@ import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 import { FacturesService } from '../../service/factures.service';
 import { ActivatedRoute, Route, Router } from '@angular/router';
+import { FormsModule } from '@angular/forms';
+import { NgxPaginationModule } from 'ngx-pagination';
 
 @Component({
   selector: 'app-factures',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, FormsModule, NgxPaginationModule],
   templateUrl: './factures.component.html',
   styleUrl: './factures.component.scss'
 })
@@ -14,6 +16,9 @@ export class FacturesComponent {
 
   facture: any
   factureId: any
+   p: number = 1;
+  filteredFacture: any
+  searchTerm: string = ''
   constructor(private service: FacturesService, private route: ActivatedRoute,
     private router: Router
   ){}
@@ -21,9 +26,13 @@ export class FacturesComponent {
     this.factureId = this.route.snapshot.params['id'];
     this.service.getAllFacture().subscribe((data: any) => {
       this.facture = data;
-      // this.facture = data.slice(-5).reverse();
-      console.log(this.facture)
+     this.applyFilter();
     })
+  }
+  applyFilter() {
+    this.filteredFacture = this.facture.filter((u: any) =>
+      (u.nomClient || u.numeroFacture || u.dateFacture || '').toLowerCase().includes((this.searchTerm || '').toLowerCase())
+    );
   }
 
     openDetail(id: number) {
@@ -38,22 +47,6 @@ export class FacturesComponent {
 
    activeFilter = 'Toutes';
 
-  factures = [
-    {
-      nom: 'Idrissa Bah',
-      ref: 'F-2026-0002',
-      date: '21/04/2026',
-      montant: 93000,
-      statut: 'PAYÉE'
-    },
-    {
-      nom: 'Mariam Diallo',
-      ref: 'F-2026-0001',
-      date: '21/04/2026',
-      montant: 1035000,
-      statut: 'PAYÉE'
-    }
-  ];
 
   setFilter(filter: string) {
     this.activeFilter = filter;

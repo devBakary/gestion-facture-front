@@ -1,6 +1,9 @@
  <main class="main-content">
         <router-outlet></router-outlet>
     </main>
+    <div *ngIf="!isOnline" class="offline-banner">
+  🔴 Pas de connexion Internet
+</div>
 <div class="bottom-nav" *ngIf="simpleUser==true" >
   <!-- pour le user -->
   <div class="nav-item active" (click)="go('/nav/home')" routerLinkActive="active">
@@ -13,7 +16,7 @@
     <span>Factures</span>
   </div>
 
-  <div class="nav-item" (click)="go('/nav/factures')" routerLinkActive="active">
+  <div class="nav-item" (click)="go('/nav/client')" routerLinkActive="active">
     <i class="icon">👥</i>
     <span>Clients</span>
   </div>

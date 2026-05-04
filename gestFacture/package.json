@@ -19,6 +19,8 @@
     "@angular/platform-browser-dynamic": "^18.2.0",
     "@angular/router": "^18.2.0",
     "bootstrap-icons": "^1.13.1",
+    "ng2-search-filter": "^0.5.1",
+    "ngx-pagination": "^6.0.3",
     "rxjs": "~7.8.0",
     "sweetalert2": "^11.26.24",
     "tslib": "^2.3.0",

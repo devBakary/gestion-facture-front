@@ -5,19 +5,19 @@
     <div class="top">
       <div>
         <p class="hello mt-4">BONJOUR</p>
-        <p class="username">bakdia194</p>
+        <p class="username">{{user?.username}}</p>
       </div>
 
-      <div class="status">
+      <div class="status" [ngClass]="{ online: isOnline, offline: !isOnline }">
         <span class="dot"></span>
-        En ligne
+        {{ isOnline ? 'En ligne' : 'Hors ligne' }}
       </div>
     </div>
 
     <div class="sales-card">
       <p>Ventes aujourd'hui</p>
-      <h2>1 128 000 FCFA</h2>
-      <span>2 factures</span>
+      <h2>{{ totalJour | number}} FCFA</h2>
+      <span>{{facture?.length}} factures</span>
     </div>
   </div>
 
@@ -26,13 +26,13 @@
     <div class="card">
       <div class="icon yellow">💰</div>
       <p>TOTAL FACTURES</p>
-      <h5 class="mx-1">2</h5>
+      <h5 class="mx-1">{{factures?.length}}</h5>
     </div>
 
     <div class="card">
       <div class="icon green">📈</div>
       <p>CHIFFRE D'AFFAIRES</p>
-      <h5>1 128 000 FCFA</h5>
+      <h5>{{ totalGeneral | number}} FCFA</h5>
     </div>
   </div>
 
@@ -40,17 +40,17 @@
   <div class="recent">
     <div class="recent-header">
       <h3>Récentes</h3>
-      <span class="mt-1">Tout voir</span>
+      <span class="mt-1" (click)="aller()">Tout voir</span>
     </div>
 
-    <div class="recent-item">
+    <div class="recent-item mb-3" *ngFor="let f of facture">
       <div>
-        <strong>Idrissa Bah</strong>
-        <p>F-2026-0002 · 21/04/2026</p>
+        <strong>{{f.nomClient}}</strong>
+        <p>{{f.numeroFacture}} · {{f.dateFacture}}</p>
       </div>
 
       <div class="right">
-        <strong>93 000 FCFA</strong>
+        <strong> {{f.total | number }} FCFA</strong>
         <div class="sync">SYNCHRO</div>
       </div>
     </div>
@@ -58,7 +58,7 @@
   </div>
 
   <!-- FLOAT BUTTON -->
-  <button class="fab">+</button>
+  <button class="fab" (click)="add()">+</button>
 
 </div>
 

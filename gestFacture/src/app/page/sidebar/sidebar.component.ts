@@ -11,21 +11,30 @@ import { CommonModule } from '@angular/common';
   styleUrl: './sidebar.component.scss'
 })
 export class SidebarComponent {
-constructor(private router: Router, 
-  private authService: AuthServiceService) {}
+  constructor(private router: Router,
+    private authService: AuthServiceService) { }
 
   user: any
   role: any
   simpleUser: boolean = false
+  isOnline: boolean = navigator.onLine;
 
- ngOnInit() {
+  ngOnInit() {
     this.user = this.authService.getUser();
     this.role = this.user.role
-    console.log(this.role);
-    
-    if( this.role == "ROLE_USER"){
+    if (this.role == "ROLE_USER") {
       this.simpleUser = true
     }
+    // check la connexion
+    window.addEventListener('online', () => {
+      this.isOnline = true;
+      console.log('🟢 Connecté à Internet');
+    });
+
+    window.addEventListener('offline', () => {
+      this.isOnline = false;
+      console.log('🔴 Hors ligne');
+    });
   }
 
   go(path: string) {

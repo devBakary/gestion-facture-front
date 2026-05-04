@@ -5,7 +5,8 @@
     <h3>Factures</h3>
 
     <div class="search">
-      <input type="text" placeholder="Rechercher client ou n°..." />
+      <input type="text" placeholder="Rechercher client ou n°..."  [(ngModel)]="searchTerm"
+    (input)="applyFilter()" />
     </div>
   </div>
 
@@ -22,7 +23,7 @@
 
   <!-- LIST -->
   <div class="list">
-    <div class="item" *ngFor="let f of facture" (click)="openDetail(f.id)">
+    <div class="item" *ngFor="let f of filteredFacture | paginate: { itemsPerPage: 8, currentPage: p }" (click)="openDetail(f.id)">
 
       <div class="left">
         <div class="top">
@@ -43,6 +44,9 @@
 
     </div>
   </div>
+  <pagination-controls (pageChange)="p = $event"></pagination-controls>
+  
+  
 
   <!-- FLOAT BUTTON -->
   <button class="fab" (click)="add()">+</button>
