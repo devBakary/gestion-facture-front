@@ -1,0 +1,30 @@
+<div class="page">
+
+  <div class="header">
+    <h3>Créer une entreprise </h3>
+  </div>
+
+  <div class="form">
+
+    <input type="text" placeholder="Username" [(ngModel)]="user.username" />
+
+    <input type="password" placeholder="Password" [(ngModel)]="user.password" />
+
+    <!-- <select [(ngModel)]="user.role">
+      <option value="ROLE_USER">Utilisateur</option>
+      <option value="ROLE_ADMIN">Admin</option>
+    </select> -->
+
+    <input type="text" placeholder="Nom entreprise" [(ngModel)]="user.name" />
+    <input type="text" placeholder="Adresse" [(ngModel)]="user.adresse" />
+    <input type="text" placeholder="Numéro" [(ngModel)]="user.numero" />
+    <input type="text" placeholder="Domaine" [(ngModel)]="user.domaine" />
+    <textarea placeholder="Description" [(ngModel)]="user.description"></textarea>
+
+    <button (click)="createUser()" class="btn-create">
+      Créer 
+    </button>
+
+  </div>
+
+</div>

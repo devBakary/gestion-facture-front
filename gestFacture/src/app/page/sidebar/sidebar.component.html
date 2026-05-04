@@ -1,24 +1,45 @@
  <main class="main-content">
         <router-outlet></router-outlet>
     </main>
-<div class="bottom-nav">
-  <div class="nav-item active" (click)="navigate('/home')">
+<div class="bottom-nav" *ngIf="simpleUser==true" >
+  <!-- pour le user -->
+  <div class="nav-item active" (click)="go('/nav/home')" routerLinkActive="active">
     <i class="icon">🏠</i>
     <span>Accueil</span>
   </div>
 
-  <div class="nav-item" (click)="navigate('/factures')">
+  <div class="nav-item" (click)="go('/nav/factures')" routerLinkActive="active">
     <i class="icon">📄</i>
     <span>Factures</span>
   </div>
 
-  <div class="nav-item" (click)="navigate('/clients')">
+  <div class="nav-item" (click)="go('/nav/factures')" routerLinkActive="active">
     <i class="icon">👥</i>
     <span>Clients</span>
   </div>
 
-  <div class="nav-item" (click)="navigate('/profil')">
+  <div class="nav-item" (click)="go('/nav/profile')" routerLinkActive="active">
     <i class="icon">⚙️</i>
     <span>Profil</span>
   </div>
+ 
 </div>
+
+
+ <!-- pour l'admin -->
+<div class="bottom-nav" *ngIf="simpleUser==false">
+<div class="nav-item active" (click)="go('/nav/list-user')" routerLinkActive="active">
+    <i class="icon">🏠</i>
+    <span>Accueill</span>
+  </div>
+
+  <div class="nav-item" (click)="go('/nav/create-user')" routerLinkActive="active">
+    <i class="icon">📄</i>
+    <span>Utilisateurs</span>
+  </div>
+
+  <div class="nav-item" (click)="go('/nav/profile')" routerLinkActive="active">
+    <i class="icon">⚙️</i>
+    <span>Profil</span>
+  </div>
+  </div>

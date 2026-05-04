@@ -6,6 +6,9 @@ import { DetailFactureComponent } from './page/detail-facture/detail-facture.com
 import { AddFacturesComponent } from './page/add-factures/add-factures.component';
 import { LoginComponent } from './page/login/login.component';
 import { authGuard } from './Config/auth.guard';
+import { AddUserComponent } from './page/add-user/add-user.component';
+import { ListUserComponent } from './page/list-user/list-user.component';
+import { ProfilComponent } from './page/profil/profil.component';
 
 export const routes: Routes = [
   {
@@ -35,12 +38,25 @@ export const routes: Routes = [
         component: AddFacturesComponent
       },
 
+      {
+        path: 'create-user',
+        component: AddUserComponent
+      },
+      {
+        path: 'list-user',
+        component: ListUserComponent
+      },
+      {
+        path: 'profile',
+        component: ProfilComponent
+      }
+
     ]
   },
   {
     path: 'login',
     component: LoginComponent
   },
-          { path: '**', redirectTo: '/nav/home' }
+  { path: '**', redirectTo: '/login' }
 
 ];

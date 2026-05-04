@@ -3,6 +3,7 @@ import { Component } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { FacturesService } from '../../service/factures.service';
 import { AuthServiceService } from '../../service/auth-service.service';
+import { Location } from '@angular/common';
 
 @Component({
   selector: 'app-detail-facture',
@@ -16,33 +17,32 @@ export class DetailFactureComponent {
   factureId: any
   factures: any
   articles: any
+  userData: any
+  user: any
   constructor(private route: ActivatedRoute,
-              private service: FacturesService,
-              private authService: AuthServiceService
-  ){}
+    private service: FacturesService,
+    private authService: AuthServiceService,
+    private location: Location
+  ) { }
 
-  ngOnInit(){
+  ngOnInit() {
     this.factureId = this.route.snapshot.params['id'];
     this.loadDocuments();
-    const user = this.authService.getUser();
-    console.log(user)
+    this.user = this.authService.getUser();
   }
 
-   loadDocuments(){
+  loadDocuments() {
     this.service.getFacture(this.factureId)
-    .subscribe((data:any)=>{
+      .subscribe((data: any) => {
 
-      this.factures = data;
-      this.articles = data.lignes;
-
-      console.log("Documents:", this.factures);
-       console.log("arti:", this.articles);
-
-    });
+        this.factures = data;
+        this.articles = data.lignes;
+        this.userData = data.user
+      });
   }
 
-   facture = {
-    numero: 'F-2026-0001',
+  facture = {
+    numero: 'F-2026-000',
     total: 1035000,
     client: 'Mariam Diallo',
     phone: '90675432',
@@ -60,33 +60,37 @@ export class DetailFactureComponent {
     'Annulée'
   ];
 
-// printMode = false;
+  // printMode = false;
 
-// openTicket() {
-//   this.printMode = true;
-// }
+  // openTicket() {
+  //   this.printMode = true;
+  // }
 
-// closeTicket() {
-//   this.printMode = false;
-// }
+  // closeTicket() {
+  //   this.printMode = false;
+  // }
 
-printFacture() {
-  this.printMode = true;
+  printFacture() {
+    this.printMode = true;
 
-  setTimeout(() => {
-    window.print();
+    setTimeout(() => {
+      window.print();
+      this.printMode = false;
+    }, 300);
+  }
+
+  // pour le popup
+  printMode = false;
+
+  openTicket() {
+    this.printMode = true;
+  }
+
+  closeTicket() {
     this.printMode = false;
-  }, 300);
-}
+  }
 
-// pour le popup
-printMode = false;
-
-openTicket() {
-  this.printMode = true;
-}
-
-closeTicket() {
-  this.printMode = false;
+  goBack() {
+  this.location.back();
 }
 }

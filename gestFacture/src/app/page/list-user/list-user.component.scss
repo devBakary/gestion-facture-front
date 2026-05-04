@@ -1,0 +1,162 @@
+.home {
+  background: #eef2f6;
+  min-height: 100vh;
+  padding-bottom: 100px;
+  font-family: Arial, sans-serif;
+}
+
+/* HEADER */
+.header {
+  background: linear-gradient(180deg, #162447, #1f3c6d);
+  color: white;
+  padding: 20px;
+}
+
+.top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.hello {
+  font-size: 11px;
+  opacity: 0.8;
+  margin: 0;
+}
+
+.username {
+  margin: 0;
+  font-weight: bold;
+}
+
+.status {
+  background: rgba(46, 204, 113, 0.2);
+  color: #2ecc71;
+  padding: 6px 12px;
+  border-radius: 20px;
+  font-size: 12px;
+  display: flex;
+  align-items: center;
+}
+
+.status .dot {
+  width: 8px;
+  height: 8px;
+  background: #2ecc71;
+  border-radius: 50%;
+  margin-right: 5px;
+}
+
+/* SALES CARD */
+.sales-card {
+  margin-top: 10px;
+  background: rgba(255,255,255,0.1);
+  padding: 8px;
+  border-radius: 15px;
+  margin-bottom: 15px;
+  font-size: 12px;
+}
+
+.sales-card h2 {
+  margin: 0;
+  font-size: 18px;
+  color: #f5a623!important;
+}
+.sales-card p {
+  margin: 5px;
+}
+
+/* STATS */
+.stats {
+  display: flex;
+  gap: 10px;
+  padding: 0 15px;
+  margin-top: -30px;
+}
+
+.card {
+  flex: 1;
+  background: white;
+  padding: 10px;
+  border-radius: 15px;
+  box-shadow: 0 5px 10px rgba(0,0,0,0.05);
+}
+
+.card p {
+  font-size: 9px;
+  color: gray;
+  margin: 5px;
+}
+
+.icon {
+  width: 30px;
+  height: 30px;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+//   margin-bottom: 8px;
+}
+
+.icon.yellow {
+  background: #fff3cd;
+}
+
+.icon.green {
+  background: #d4edda;
+}
+
+/* RECENT */
+.recent {
+  padding: 15px;
+}
+
+.recent-header {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 10px;
+}
+
+.recent-header span {
+  color: orange;
+  font-size: 11px;
+}
+
+.recent-item {
+  background: white;
+  padding: 10px;
+  border-radius: 12px;
+  display: flex;
+  justify-content: space-between;
+  box-shadow: 0 3px 8px rgba(0,0,0,0.05);
+}
+
+.recent-item p {
+  font-size: 12px;
+  color: gray;
+  margin: 5px;
+}
+
+.right {
+  text-align: right;
+}
+
+.sync {
+  color: #2ecc71;
+  font-size: 10px;
+}
+
+/* FLOAT BUTTON */
+.fab {
+  position: fixed;
+  bottom: 90px;
+  right: 20px;
+  width: 60px;
+  height: 60px;
+  background: #f5a623;
+  border: none;
+  border-radius: 50%;
+  color: white;
+  font-size: 28px;
+  box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+}

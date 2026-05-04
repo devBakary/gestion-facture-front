@@ -1,4 +1,4 @@
-import { CommonModule } from '@angular/common';
+import { CommonModule, Location } from '@angular/common';
 import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
@@ -30,7 +30,7 @@ export class AddFacturesComponent {
     }
   ];
 
-  constructor(private service: FacturesService) {}
+  constructor(private service: FacturesService, private location: Location) {}
 
   addLine() {
     this.lignes.push({
@@ -113,4 +113,8 @@ export class AddFacturesComponent {
       { description: '', quantite: 1, prix: 0 }
     ];
   }
+
+   goBack() {
+  this.location.back();
+}
 }

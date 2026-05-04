@@ -30,6 +30,12 @@ export class FacturesComponent {
     console.log("Navigation vers:", id);
     this.router.navigate(['/nav/detail', id]);
   }
+
+  add() {
+  this.router.navigate(['/nav/add-facture']);
+}
+
+
    activeFilter = 'Toutes';
 
   factures = [

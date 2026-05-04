@@ -1,0 +1,66 @@
+<div class="home">
+
+  <!-- HEADER -->
+  <div class="header py-4">
+    <div class="top">
+      <div>
+        <p class="hello mt-4">BONJOUR</p>
+        <p class="username">{{ user?.username }}</p>
+      </div>
+
+      <div class="status">
+        <span class="dot"></span>
+        En ligne
+      </div>
+    </div>
+
+    <div class="sales-card">
+      <p>Ventes aujourd'hui</p>
+      <h2>1 128 000 FCFA</h2>
+      <span>2 factures</span>
+    </div>
+  </div>
+
+  <!-- STATS -->
+  <div class="stats">
+    <div class="card">
+      <div class="icon yellow">💰</div>
+      <p>TOTAL UTILISATEUR</p>
+      <h5 class="mx-1">{{stats.totalUsers}}</h5>
+    </div>
+
+    <div class="card">
+      <div class="icon green">📈</div>
+      <p>TOTAL FACTURES</p>
+      <h5>{{facture?.length}}</h5>
+    </div>
+  </div>
+
+  <!-- RECENTES -->
+  <div class="recent">
+    <div class="recent-header">
+      <h3>Récentes</h3>
+      <span class="mt-1">Tout voir</span>
+    </div>
+
+    <div class="recent-item" *ngFor="let user of users">
+      <div>
+        <strong>{{ user?.name }}</strong>
+        <p>{{ user?.domaine }}</p>
+      </div>
+
+      <div class="right">
+        <strong>{{ user?.numero }}</strong>
+        <div class="sync">{{ user?.adresse }}</div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- FLOAT BUTTON -->
+  <button class="fab" (click)="add()">+</button>
+
+</div>
+
+<!-- NAV -->
+<!-- <app-bottom-nav></app-bottom-nav> -->

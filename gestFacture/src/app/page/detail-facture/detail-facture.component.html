@@ -2,7 +2,7 @@
 
     <!-- HEADER -->
     <div class="header">
-        <button class="circle-btn back-btn">
+        <button class="circle-btn back-btn" (click)="goBack()">
             ←
         </button>
 
@@ -81,11 +81,11 @@
         <div class="ticket-popup">
             <div class="header-ticket">
                 <h6 class="text-center">
-                    Horon Phone
+                    {{ userData?.name }}
                 </h6>
                 <div class="text-center">
-                    <div>Bamako Coura - 90909090</div>
-                    <small>Vente de telephone et accessoire</small>
+                    <div>{{ userData?.adresse }} - {{ userData?.numero }}</div>
+                    <small>{{ userData?.domaine }}</small>
                 </div>
             </div>
 

@@ -43,7 +43,7 @@ export class LoginComponent {
 
           this.authService.saveUser(user);
 
-          this.router.navigate(['/dashboard']);
+          this.router.navigate(['/nav/home']);
         });
 
       },

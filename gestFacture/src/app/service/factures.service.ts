@@ -20,6 +20,6 @@ export class FacturesService {
     return this.http.get(`${this.baseUrl}/${id}`);
   }
   getAllFacture() {
-    return this.http.get(`${this.baseUrl}`);
+    return this.http.get(`${this.baseUrl}/getAll`);
   }
 }

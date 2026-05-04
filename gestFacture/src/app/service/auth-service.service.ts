@@ -9,13 +9,13 @@ export class AuthServiceService {
 
   private api = 'http://localhost:8080/api/auth';
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient) { }
 
-  login(data: any): Observable<any>{
-    return this.http.post(`${this.api}/login`, data );
+  login(data: any): Observable<any> {
+    return this.http.post(`${this.api}/login`, data);
   }
 
-    getMe() : Observable<any>{
+  getMe(): Observable<any> {
     return this.http.get<any>(`${this.api}/me`);
   }
 
@@ -31,13 +31,14 @@ export class AuthServiceService {
     localStorage.removeItem('token');
   }
   isLoggedIn(): boolean {
-  return !!this.getToken();
-}
+    return !!this.getToken();
+  }
   saveUser(user: any) {
     localStorage.setItem('user', JSON.stringify(user));
   }
 
   getUser() {
-    return JSON.parse(localStorage.getItem('user') || '{}');
+    const user = localStorage.getItem('user');
+    return user ? JSON.parse(user) : null;
   }
 }
