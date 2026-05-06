@@ -55,6 +55,14 @@
       </div>
     </div>
 
+    <div class="text-center py-5" *ngIf="facture?.length === 0">
+
+      <p *ngIf="isOnline">
+        Vous n'avez pas de facture disponible !
+      </p>
+
+    </div>
+
   </div>
 
   <!-- FLOAT BUTTON -->

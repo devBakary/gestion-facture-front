@@ -22,30 +22,30 @@ export class HomeComponent {
   user: any
   isOnline: boolean = navigator.onLine;
   constructor(private service: FacturesService,
-              private router: Router,
-              private authservice: AuthServiceService
+    private router: Router,
+    private authservice: AuthServiceService
   ) { }
 
   ngOnInit() {
-     this.user = this.authservice.getUser();
-     
+    this.user = this.authservice.getUser();
+
     this.service.getMyFacture().subscribe((data: any) => {
       this.factures = data;
-      this.facture = data.slice(-6).reverse();
-      
-      this.calculateTotals(); 
-    });
-      // check la connexion
-     this.isOnline = navigator.onLine;
+      this.facture = data.slice(-5).reverse();
 
-  merge(
-    fromEvent(window, 'online').pipe(mapTo(true)),
-    fromEvent(window, 'offline').pipe(mapTo(false)),
-    of(navigator.onLine)
-  ).subscribe(status => {
-    this.isOnline = status;
-    console.log(status ? '🟢 Online' : '🔴 Offline');
-  });
+      this.calculateTotals();
+    });
+    // check la connexion
+    this.isOnline = navigator.onLine;
+
+    merge(
+      fromEvent(window, 'online').pipe(mapTo(true)),
+      fromEvent(window, 'offline').pipe(mapTo(false)),
+      of(navigator.onLine)
+    ).subscribe(status => {
+      this.isOnline = status;
+      console.log(status ? '🟢 Online' : '🔴 Offline');
+    });
   }
 
   calculateTotals() {
@@ -65,10 +65,10 @@ export class HomeComponent {
       }, 0);
   }
 
-   add() {
-  this.router.navigate(['/nav/add-facture']);
-}
-aller() {
-  this.router.navigate(['/nav/factures']);
-}
+  add() {
+    this.router.navigate(['/nav/add-facture']);
+  }
+  aller() {
+    this.router.navigate(['/nav/factures']);
+  }
 }

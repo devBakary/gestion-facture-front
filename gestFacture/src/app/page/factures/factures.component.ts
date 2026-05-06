@@ -49,13 +49,36 @@ export class FacturesComponent {
       }
     });
   }
-
   loadFactures() {
+
+  if (this.isOnline) {
+
+    // 🟢 ONLINE → API seulement
     this.service.getMyFacture().subscribe((data: any) => {
-      this.facture = data;
+
+      this.facture = data || [];
       this.applyFilter();
+
     });
+
+  } else {
+
+    // 🔴 OFFLINE → localStorage seulement
+    const offlineFactures = this.offlineSync.getPending();
+
+    this.facture = offlineFactures;
+    console.log(this.facture);
+    
+    this.applyFilter();
   }
+}
+
+  // loadFactures() {
+  //   this.service.getMyFacture().subscribe((data: any) => {
+  //     this.facture = data;
+  //     this.applyFilter();
+  //   });
+  // }
   applyFilter() {
     this.filteredFacture = this.facture.filter((u: any) =>
       (u.nomClient || u.numeroFacture || u.dateFacture || '').toLowerCase().includes((this.searchTerm || '').toLowerCase())

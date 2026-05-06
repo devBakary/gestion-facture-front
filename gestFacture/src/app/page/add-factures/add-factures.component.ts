@@ -35,30 +35,30 @@ export class AddFacturesComponent {
     }
   ];
 
-  constructor(private service: FacturesService, 
+  constructor(private service: FacturesService,
     private location: Location,
-    private offlineSync: OfflineSyncService) {}
+    private offlineSync: OfflineSyncService) { }
 
   ngOnInit() {
-    // 🔹 statut initial internet
-  this.isOnline = navigator.onLine;
 
-  // 🔥 gestion online/offline propre
-  merge(
-    fromEvent(window, 'online').pipe(mapTo(true)),
-    fromEvent(window, 'offline').pipe(mapTo(false)),
-    of(navigator.onLine)
-  ).subscribe(status => {
+    this.isOnline = navigator.onLine;
 
-    this.isOnline = status;
-    console.log(status ? '🟢 Online' : '🔴 Offline');
+    merge(
+      fromEvent(window, 'online').pipe(mapTo(true)),
+      fromEvent(window, 'offline').pipe(mapTo(false)),
+      of(navigator.onLine)
+    ).subscribe(status => {
 
-    // 🔥 SYNC AUTOMATIQUE QUAND INTERNET REVIENT
-    if (status) {
-      this.offlineSync.sync();
-      // this.loadFactures(); // refresh UI
-    }
-  });
+      this.isOnline = status;
+      console.log(status ? '🟢 Online' : '🔴 Offline');
+
+      // sync avec délai (évite multi déclenchement)
+      if (status) {
+        setTimeout(() => {
+          this.offlineSync.sync();
+        }, 1000);
+      }
+    });
   }
 
   addLine() {
@@ -69,7 +69,7 @@ export class AddFacturesComponent {
     });
   }
 
-   getTotalFacture(): number {
+  getTotalFacture(): number {
     return this.lignes.reduce((total, ligne) => {
       return total + (ligne.quantite * ligne.prix);
     }, 0);
@@ -89,52 +89,73 @@ export class AddFacturesComponent {
       }))
     };
 
-    console.log('Facture envoyée:', facture);
-     this.isLoading = true;
-    
-       // Loader
-  Swal.fire({
-    title: 'Enregistrement...',
-    text: 'Veuillez patienter',
-    allowOutsideClick: false,
-    didOpen: () => {
-      Swal.showLoading();
+    this.isLoading = true;
+
+    Swal.fire({
+      title: 'Enregistrement...',
+      text: 'Veuillez patienter',
+      allowOutsideClick: false,
+      didOpen: () => Swal.showLoading()
+    });
+
+    // ================= ONLINE =================
+    if (this.isOnline) {
+
+      this.service.createFacture(facture).subscribe({
+        next: () => {
+          this.isLoading = false;
+          Swal.close();
+
+          Swal.fire({
+            icon: 'success',
+            title: 'Succès',
+            text: 'Facture enregistrée'
+          });
+
+          this.resetForm();
+        },
+
+        error: () => {
+          console.log('❌ erreur API → fallback offline');
+
+          this.offlineSync.saveOffline(facture);
+
+          this.isLoading = false;
+          Swal.close();
+
+          Swal.fire({
+            icon: 'warning',
+            title: 'Hors ligne',
+            text: 'Facture sauvegardée localement'
+          });
+
+          this.resetForm();
+        }
+      });
+
     }
-  });
-   if(this.isOnline){ 
-    this.service.createFacture(facture).subscribe({
-      next: (res) => {
-        this.isLoading = false;
-        console.log('Facture enregistrée', res);
-         Swal.close();
-
-      Swal.fire({
-        icon: 'success',
-        title: 'Succès',
-        text: 'Facture enregistrée avec succès'
-      });
-
-        // alert('Facture enregistrée avec succès');
-        this.resetForm();
-      },
-      error: (err) => {
-        console.error(err);
-         this.isLoading = false;
-         Swal.close();
-
-      Swal.fire({
-        icon: 'error',
-        title: 'Erreur',
-        text: "Erreur lors de l'enregistrement"
-      });
-        // alert('Erreur lors de l’enregistrement');
-      }
-    });}
+    // ================= OFFLINE =================
     else {
-    console.log('📴 Offline → sauvegarde locale');
-    this.offlineSync.saveOffline(facture);
-  }
+      const factureOffline = {
+        ...facture,
+        total: this.getTotalFacture(), // 🔥 ajouté uniquement ici
+        date: new Date().toISOString().split('T')[0], // utile pour affichage
+        isOffline: true
+      };
 
+      this.offlineSync.saveOffline(factureOffline);
+
+      this.isLoading = false;
+      Swal.close();
+
+      Swal.fire({
+        icon: 'info',
+        title: 'Mode hors ligne',
+        text: 'Facture sauvegardée localement'
+      });
+
+      this.resetForm();
+    }
   }
 
   // 🔄 reset
@@ -147,7 +168,7 @@ export class AddFacturesComponent {
     ];
   }
 
-   goBack() {
-  this.location.back();
-}
+  goBack() {
+    this.location.back();
+  }
 }

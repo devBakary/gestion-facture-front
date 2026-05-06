@@ -5,16 +5,13 @@
     <h3>Factures</h3>
 
     <div class="search">
-      <input type="text" placeholder="Rechercher client ou n°..."  [(ngModel)]="searchTerm"
-    (input)="applyFilter()" />
+      <input type="text" placeholder="Rechercher client ou n°..." [(ngModel)]="searchTerm" (input)="applyFilter()" />
     </div>
   </div>
 
   <!-- FILTERS -->
   <div class="filters">
-    <button 
-      [class.active]="activeFilter === 'Toutes'"
-      (click)="setFilter('Toutes')">Toutes</button>
+    <button [class.active]="activeFilter === 'Toutes'" (click)="setFilter('Toutes')">Toutes</button>
 
     <button (click)="setFilter('Brouillon')">Brouillon</button>
     <button (click)="setFilter('Envoyée')">Envoyée</button>
@@ -23,15 +20,18 @@
 
   <!-- LIST -->
   <div class="list">
-    <div class="item" *ngFor="let f of filteredFacture | paginate: { itemsPerPage: 8, currentPage: p }" (click)="openDetail(f.id)">
+    <div class="item" *ngFor="let f of filteredFacture | paginate: { itemsPerPage: 8, currentPage: p }"
+      (click)="openDetail(f.id)">
 
       <div class="left">
         <div class="top">
           <strong>{{ f.nomClient }}</strong>
           <span class="badge">{{ f.numero }}</span>
         </div>
-
-        <p>{{ f.numeroFacture }} · {{ f.dateFacture }}</p>
+        <!-- si enligne -->
+        <p *ngIf="isOnline">{{ f.numeroFacture }} · {{ f.dateFacture }}</p>
+        <!-- si offline -->
+        <p *ngIf="!isOnline">{{ f.tempId }} · {{ f.date }}</p>
       </div>
 
       <div class="right">
@@ -42,11 +42,24 @@
         <span class="arrow">›</span>
       </div>
 
+
+
+    </div>
+    <div class="text-center py-5" *ngIf="filteredFacture?.length === 0">
+
+      <p *ngIf="isOnline">
+        Aucune facture disponible !
+      </p>
+
+      <p *ngIf="!isOnline">
+        Pas de factures hors ligne !
+      </p>
+
     </div>
   </div>
   <pagination-controls (pageChange)="p = $event"></pagination-controls>
-  
-  
+
+
 
   <!-- FLOAT BUTTON -->
   <button class="fab" (click)="add()">+</button>
