@@ -4,6 +4,9 @@ import { FacturesService } from '../../service/factures.service';
 import { ActivatedRoute, Route, Router } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { NgxPaginationModule } from 'ngx-pagination';
+import { fromEvent, merge, of } from 'rxjs';
+import { mapTo, startWith } from 'rxjs/operators';
+import { OfflineSyncService } from '../../service/offline-sync.service';
 
 @Component({
   selector: 'app-factures',
@@ -16,18 +19,42 @@ export class FacturesComponent {
 
   facture: any
   factureId: any
-   p: number = 1;
+  p: number = 1;
   filteredFacture: any
   searchTerm: string = ''
-  constructor(private service: FacturesService, private route: ActivatedRoute,
-    private router: Router
-  ){}
-    ngOnInit() {
+  isOnline: boolean = navigator.onLine;
+  constructor(private service: FacturesService,
+    private route: ActivatedRoute,
+    private router: Router,
+    private offlineSync: OfflineSyncService
+  ) { }
+  ngOnInit() {
     this.factureId = this.route.snapshot.params['id'];
-    this.service.getAllFacture().subscribe((data: any) => {
+    this.loadFactures();
+    // this.service.getAllFacture().subscribe((data: any) => {
+    //   this.facture = data;
+    //  this.applyFilter();
+    // });
+    merge(
+      fromEvent(window, 'online').pipe(mapTo(true)),
+      fromEvent(window, 'offline').pipe(mapTo(false)),
+      of(navigator.onLine)
+    ).subscribe(status => {
+
+      this.isOnline = status;
+      // 🔥 SYNC AUTOMATIQUE QUAND INTERNET REVIENT
+      if (status) {
+        this.offlineSync.sync();
+        this.loadFactures(); // refresh UI
+      }
+    });
+  }
+
+  loadFactures() {
+    this.service.getMyFacture().subscribe((data: any) => {
       this.facture = data;
-     this.applyFilter();
-    })
+      this.applyFilter();
+    });
   }
   applyFilter() {
     this.filteredFacture = this.facture.filter((u: any) =>
@@ -35,17 +62,17 @@ export class FacturesComponent {
     );
   }
 
-    openDetail(id: number) {
+  openDetail(id: number) {
     console.log("Navigation vers:", id);
     this.router.navigate(['/nav/detail', id]);
   }
 
   add() {
-  this.router.navigate(['/nav/add-facture']);
-}
+    this.router.navigate(['/nav/add-facture']);
+  }
 
 
-   activeFilter = 'Toutes';
+  activeFilter = 'Toutes';
 
 
   setFilter(filter: string) {

@@ -29,7 +29,7 @@ export class HomeComponent {
   ngOnInit() {
      this.user = this.authservice.getUser();
      
-    this.service.getAllFacture().subscribe((data: any) => {
+    this.service.getMyFacture().subscribe((data: any) => {
       this.factures = data;
       this.facture = data.slice(-6).reverse();
       

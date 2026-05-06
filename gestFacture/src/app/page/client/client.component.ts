@@ -27,7 +27,7 @@ export class ClientComponent {
   ) { }
   ngOnInit() {
     this.factureId = this.route.snapshot.params['id'];
-    this.service.getAllFacture().subscribe((data: any) => {
+    this.service.getMyFacture().subscribe((data: any) => {
       this.clients = data;
       this.applyFilter();
     })

@@ -22,4 +22,7 @@ export class FacturesService {
   getAllFacture() {
     return this.http.get(`${this.baseUrl}/getAll`);
   }
+  getMyFacture() {
+    return this.http.get(`${this.baseUrl}`);
+  }
 }

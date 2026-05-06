@@ -4,6 +4,9 @@ import { FormsModule } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
 import { FacturesService } from '../../service/factures.service';
 import Swal from 'sweetalert2';
+import { OfflineSyncService } from '../../service/offline-sync.service';
+import { fromEvent, merge, of } from 'rxjs';
+import { mapTo, startWith } from 'rxjs/operators';
 
 @Component({
   selector: 'app-add-factures',
@@ -15,6 +18,8 @@ import Swal from 'sweetalert2';
 export class AddFacturesComponent {
 
   isLoading = false;
+  isOnline: boolean = navigator.onLine;
+
 
   // 👇 CLIENT (remplace adresse seule)
   nomClient = '';
@@ -30,7 +35,31 @@ export class AddFacturesComponent {
     }
   ];
 
-  constructor(private service: FacturesService, private location: Location) {}
+  constructor(private service: FacturesService, 
+    private location: Location,
+    private offlineSync: OfflineSyncService) {}
+
+  ngOnInit() {
+    // 🔹 statut initial internet
+  this.isOnline = navigator.onLine;
+
+  // 🔥 gestion online/offline propre
+  merge(
+    fromEvent(window, 'online').pipe(mapTo(true)),
+    fromEvent(window, 'offline').pipe(mapTo(false)),
+    of(navigator.onLine)
+  ).subscribe(status => {
+
+    this.isOnline = status;
+    console.log(status ? '🟢 Online' : '🔴 Offline');
+
+    // 🔥 SYNC AUTOMATIQUE QUAND INTERNET REVIENT
+    if (status) {
+      this.offlineSync.sync();
+      // this.loadFactures(); // refresh UI
+    }
+  });
+  }
 
   addLine() {
     this.lignes.push({
@@ -49,8 +78,6 @@ export class AddFacturesComponent {
   // 🔥 ENVOI BACKEND
   saveFacture() {
 
-    
-
     const facture = {
       nomClient: this.nomClient,
       telephone: this.telephone,
@@ -64,6 +91,7 @@ export class AddFacturesComponent {
 
     console.log('Facture envoyée:', facture);
      this.isLoading = true;
+    
        // Loader
   Swal.fire({
     title: 'Enregistrement...',
@@ -73,7 +101,7 @@ export class AddFacturesComponent {
       Swal.showLoading();
     }
   });
-
+   if(this.isOnline){ 
     this.service.createFacture(facture).subscribe({
       next: (res) => {
         this.isLoading = false;
@@ -101,7 +129,12 @@ export class AddFacturesComponent {
       });
         // alert('Erreur lors de l’enregistrement');
       }
-    });
+    });}
+    else {
+    console.log('📴 Offline → sauvegarde locale');
+    this.offlineSync.saveOffline(facture);
+  }
+
   }
 
   // 🔄 reset
