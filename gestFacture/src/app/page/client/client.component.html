@@ -33,6 +33,9 @@
       </div>
 
     </div>
+    <div class="text-center py-5" *ngIf="clients?.length === 0">
+        <p>Vous n'avez pas d'enregistrement disponible !</p>
+    </div>
   </div>
   <pagination-controls (pageChange)="p = $event"></pagination-controls>
 

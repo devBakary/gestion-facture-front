@@ -101,4 +101,35 @@ export class FacturesComponent {
   setFilter(filter: string) {
     this.activeFilter = filter;
   }
+
+  // supprimer
+  deleteFacture(id: number) {
+
+  if (this.isOnline) {
+
+    this.service.deleteFacture(id).subscribe({
+      next: () => {
+        console.log('✔ supprimé');
+
+        // refresh liste
+        this.loadFactures();
+      },
+      error: (err) => {
+        console.log('❌ erreur suppression', err);
+      }
+    });
+
+  } else {
+    console.log('📴 suppression offline');
+
+    // 🔥 suppression localStorage
+    const pending = this.offlineSync.getPending();
+
+    const updated = pending.filter((f: any) => f.tempId !== id);
+
+    localStorage.setItem('pending_factures', JSON.stringify(updated));
+
+    this.loadFactures();
+  }
+}
 }

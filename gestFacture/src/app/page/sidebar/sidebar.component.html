@@ -4,45 +4,47 @@
     <div *ngIf="!isOnline" class="offline-banner">
   🔴 Pas de connexion Internet
 </div>
-<div class="bottom-nav" *ngIf="simpleUser==true" >
-  <!-- pour le user -->
-  <div class="nav-item active" (click)="go('/nav/home')" routerLinkActive="active">
+<div class="bottom-nav" *ngIf="simpleUser==true">
+
+  <div class="nav-item" routerLink="/nav/home" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">
     <i class="icon">🏠</i>
     <span>Accueil</span>
   </div>
 
-  <div class="nav-item" (click)="go('/nav/factures')" routerLinkActive="active">
+  <div class="nav-item" routerLink="/nav/factures" routerLinkActive="active">
     <i class="icon">📄</i>
     <span>Factures</span>
   </div>
 
-  <div class="nav-item" (click)="go('/nav/client')" routerLinkActive="active">
+  <div class="nav-item" routerLink="/nav/client" routerLinkActive="active">
     <i class="icon">👥</i>
     <span>Clients</span>
   </div>
 
-  <div class="nav-item" (click)="go('/nav/profile')" routerLinkActive="active">
+  <div class="nav-item" routerLink="/nav/profile" routerLinkActive="active">
     <i class="icon">⚙️</i>
     <span>Profil</span>
   </div>
- 
+
 </div>
 
 
  <!-- pour l'admin -->
 <div class="bottom-nav" *ngIf="simpleUser==false">
-<div class="nav-item active" (click)="go('/nav/list-user')" routerLinkActive="active">
+
+  <div class="nav-item" routerLink="/nav/list-user" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">
     <i class="icon">🏠</i>
-    <span>Accueill</span>
+    <span>Accueil</span>
   </div>
 
-  <div class="nav-item" (click)="go('/nav/create-user')" routerLinkActive="active">
+  <div class="nav-item" routerLink="/nav/create-user" routerLinkActive="active">
     <i class="icon">📄</i>
     <span>Utilisateurs</span>
   </div>
 
-  <div class="nav-item" (click)="go('/nav/profile')" routerLinkActive="active">
+  <div class="nav-item" routerLink="/nav/profile" routerLinkActive="active">
     <i class="icon">⚙️</i>
     <span>Profil</span>
   </div>
-  </div>
+
+</div>

@@ -25,4 +25,8 @@ export class FacturesService {
   getMyFacture() {
     return this.http.get(`${this.baseUrl}`);
   }
+
+  deleteFacture(id: number) {
+    return this.http.delete(`${this.baseUrl}/${id}`);
+  }
 }

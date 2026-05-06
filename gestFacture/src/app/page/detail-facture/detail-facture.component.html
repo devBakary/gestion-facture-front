@@ -8,7 +8,7 @@
 
         <h4 class="pt-4">{{ factures?.numeroFacture }}</h4>
 
-        <button class="circle-btn delete-btn">
+        <button class="circle-btn delete-btn" (click)="deleteFacture(factures.id)">
             🗑
         </button>
     </div>

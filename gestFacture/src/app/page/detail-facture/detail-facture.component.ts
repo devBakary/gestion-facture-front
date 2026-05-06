@@ -60,16 +60,6 @@ export class DetailFactureComponent {
     'Annulée'
   ];
 
-  // printMode = false;
-
-  // openTicket() {
-  //   this.printMode = true;
-  // }
-
-  // closeTicket() {
-  //   this.printMode = false;
-  // }
-
   printFacture() {
     this.printMode = true;
 
@@ -91,6 +81,23 @@ export class DetailFactureComponent {
   }
 
   goBack() {
-  this.location.back();
-}
+    this.location.back();
+  }
+
+  // supprimer
+  deleteFacture(id: number) {
+
+    this.service.deleteFacture(id).subscribe({
+      next: () => {
+        console.log('✔ supprimé');
+
+        // refresh liste
+        this.loadDocuments();
+      },
+      error: (err) => {
+        console.log('❌ erreur suppression', err);
+      }
+    });
+
+  }
 }
