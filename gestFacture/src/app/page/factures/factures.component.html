@@ -2,11 +2,25 @@
 
   <!-- HEADER -->
   <div class="header py-4">
-    <h3>Factures</h3>
+    <div class="top">
+       <h3>Factures</h3>
+    <div class="top-actions">
+      <button class="select-btn" (click)="toggleSelectionMode()">
+        {{ selectionMode ? 'Annuler' : 'Sélectionner' }}
+      </button>
+
+      <!-- suppression multiple -->
+      <button *ngIf="selectedFactures.length > 0" class="delete-btn" (click)="deleteSelected()">
+        🗑 {{ selectedFactures.length }}
+      </button>
+    </div>
+    </div>
+   
 
     <div class="search">
       <input type="text" placeholder="Rechercher client ou n°..." [(ngModel)]="searchTerm" (input)="applyFilter()" />
     </div>
+
   </div>
 
   <!-- FILTERS -->
@@ -20,8 +34,14 @@
 
   <!-- LIST -->
   <div class="list">
-    <div class="item" *ngFor="let f of filteredFacture | paginate: { itemsPerPage: 8, currentPage: p }"
-      (click)="openDetail(f.id)">
+    <div class="item" *ngFor="let f of filteredFacture | paginate: { itemsPerPage: 8, currentPage: p } " [ngClass]="{
+    'selected-card': isSelected(f.id)
+  }" (click)="openDetail(f.id)">
+
+      <!-- checkbox visible seulement en mode sélection -->
+      <div *ngIf="selectionMode" class="check-area">
+        <input type="checkbox" [checked]="isSelected(f.id)" (change)="toggleSelection(f.id)" />
+      </div>
 
       <div class="left">
         <div class="top">
@@ -41,7 +61,6 @@
       <div>
         <span class="arrow">›</span>
       </div>
-
 
 
     </div>
@@ -65,6 +84,3 @@
   <button class="fab" (click)="add()">+</button>
 
 </div>
-
-<!-- NAV -->
-<!-- <app-bottom-nav></app-bottom-nav> -->

@@ -29,4 +29,12 @@ export class FacturesService {
   deleteFacture(id: number) {
     return this.http.delete(`${this.baseUrl}/${id}`);
   }
+
+  deleteMultipleFactures(ids: number[]) {
+  return this.http.delete(`${this.baseUrl}/delete-multiple`,
+    {
+      body: ids
+    }
+  );
+}
 }

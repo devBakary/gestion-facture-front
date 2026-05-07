@@ -15,6 +15,10 @@
 .header h2 {
   margin-bottom: 10 px;
 }
+.top{
+  display: flex;
+  justify-content: space-between;
+}
 
 /* SEARCH */
 .search {
@@ -116,4 +120,33 @@
   color: white;
   font-size: 28px;
   box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+}
+
+// la suppression multiple
+.select-btn,
+.delete-btn {
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  font-weight: 600;
+}
+
+.select-btn {
+  background: #162a57;
+  color: white;
+}
+
+.delete-btn {
+  background: #e74c3c;
+  color: white;
+}
+
+.selected-card {
+  background: #ffebeb;
+  border: 2px solid #e74c3c;
+  transform: scale(0.98);
+}
+
+.check-area {
+  margin-right: 10px;
 }

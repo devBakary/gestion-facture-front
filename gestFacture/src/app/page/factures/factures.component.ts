@@ -7,6 +7,7 @@ import { NgxPaginationModule } from 'ngx-pagination';
 import { fromEvent, merge, of } from 'rxjs';
 import { mapTo, startWith } from 'rxjs/operators';
 import { OfflineSyncService } from '../../service/offline-sync.service';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-factures',
@@ -22,63 +23,51 @@ export class FacturesComponent {
   p: number = 1;
   filteredFacture: any
   searchTerm: string = ''
+  selectionMode = false;
+  selectedFactures: number[] = [];
   isOnline: boolean = navigator.onLine;
+
   constructor(private service: FacturesService,
     private route: ActivatedRoute,
     private router: Router,
     private offlineSync: OfflineSyncService
   ) { }
+  
   ngOnInit() {
     this.factureId = this.route.snapshot.params['id'];
     this.loadFactures();
-    // this.service.getAllFacture().subscribe((data: any) => {
-    //   this.facture = data;
-    //  this.applyFilter();
-    // });
     merge(
       fromEvent(window, 'online').pipe(mapTo(true)),
       fromEvent(window, 'offline').pipe(mapTo(false)),
       of(navigator.onLine)
     ).subscribe(status => {
-
       this.isOnline = status;
-      // 🔥 SYNC AUTOMATIQUE QUAND INTERNET REVIENT
+      // SYNC AUTOMATIQUE QUAND INTERNET REVIENT
       if (status) {
         this.offlineSync.sync();
-        this.loadFactures(); // refresh UI
+        this.loadFactures();
       }
     });
   }
+
   loadFactures() {
+    if (this.isOnline) {
 
-  if (this.isOnline) {
+      // recuperation de la facture ONLINE
+      this.service.getMyFacture().subscribe((data: any) => {
+        this.facture = data || [];
+        this.applyFilter();
+      });
+    } else {
 
-    // 🟢 ONLINE → API seulement
-    this.service.getMyFacture().subscribe((data: any) => {
-
-      this.facture = data || [];
+      // recuperation de la facture en offline
+      const offlineFactures = this.offlineSync.getPending();
+      this.facture = offlineFactures;
+      console.log(this.facture);
       this.applyFilter();
-
-    });
-
-  } else {
-
-    // 🔴 OFFLINE → localStorage seulement
-    const offlineFactures = this.offlineSync.getPending();
-
-    this.facture = offlineFactures;
-    console.log(this.facture);
-    
-    this.applyFilter();
+    }
   }
-}
 
-  // loadFactures() {
-  //   this.service.getMyFacture().subscribe((data: any) => {
-  //     this.facture = data;
-  //     this.applyFilter();
-  //   });
-  // }
   applyFilter() {
     this.filteredFacture = this.facture.filter((u: any) =>
       (u.nomClient || u.numeroFacture || u.dateFacture || '').toLowerCase().includes((this.searchTerm || '').toLowerCase())
@@ -86,8 +75,9 @@ export class FacturesComponent {
   }
 
   openDetail(id: number) {
-    console.log("Navigation vers:", id);
-    this.router.navigate(['/nav/detail', id]);
+    if (this.selectionMode == false) {
+      this.router.navigate(['/nav/detail', id]);
+    }
   }
 
   add() {
@@ -104,32 +94,81 @@ export class FacturesComponent {
 
   // supprimer
   deleteFacture(id: number) {
+    if (this.isOnline) {
+      this.service.deleteFacture(id).subscribe({
+        next: () => {
+          // refresh liste
+          this.loadFactures();
+        },
+        error: (err) => {
+          console.log('❌ erreur suppression', err);
+        }
+      });
 
-  if (this.isOnline) {
-
-    this.service.deleteFacture(id).subscribe({
-      next: () => {
-        console.log('✔ supprimé');
-
-        // refresh liste
-        this.loadFactures();
-      },
-      error: (err) => {
-        console.log('❌ erreur suppression', err);
-      }
-    });
-
-  } else {
-    console.log('📴 suppression offline');
-
-    // 🔥 suppression localStorage
-    const pending = this.offlineSync.getPending();
-
-    const updated = pending.filter((f: any) => f.tempId !== id);
-
-    localStorage.setItem('pending_factures', JSON.stringify(updated));
-
-    this.loadFactures();
+    } else {
+      //  suppression localStorage
+      const pending = this.offlineSync.getPending();
+      const updated = pending.filter((f: any) => f.tempId !== id);
+      localStorage.setItem('pending_factures', JSON.stringify(updated));
+      this.loadFactures();
+    }
   }
-}
+
+  // selection multiple mode
+  toggleSelectionMode() {
+    this.selectionMode = !this.selectionMode;
+    // reset si on quitte le mode
+    if (!this.selectionMode) {
+      this.selectedFactures = [];
+    }
+  }
+
+  toggleSelection(id: number) {
+    const index = this.selectedFactures.indexOf(id);
+    if (index > -1) {
+      this.selectedFactures.splice(index, 1);
+    } else {
+      this.selectedFactures.push(id);
+    }
+  }
+
+  isSelected(id: number): boolean {
+    return this.selectedFactures.includes(id);
+  }
+
+  // ////// suppression multiple
+  deleteSelected() {
+    if (this.selectedFactures.length === 0) return;
+    Swal.fire({
+      title: 'Supprimer ?',
+      text: `${this.selectedFactures.length} facture(s)`,
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonText: 'Oui',
+      cancelButtonText: 'Non'
+    }).then((result) => {
+      if (!result.isConfirmed) return;
+      this.service.deleteMultipleFactures(this.selectedFactures)
+        .subscribe({
+          next: () => {
+            Swal.fire({
+              icon: 'success',
+              title: 'Succès',
+              text: 'Factures supprimées'
+            });
+            this.selectedFactures = [];
+            this.loadFactures();
+          },
+          error: (err) => {
+            console.log(err);
+            Swal.fire({
+              icon: 'error',
+              title: 'Erreur',
+              text: 'Erreur suppression'
+            });
+          }
+        });
+    });
+  }
+
 }
