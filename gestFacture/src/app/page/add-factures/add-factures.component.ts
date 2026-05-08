@@ -50,7 +50,6 @@ export class AddFacturesComponent {
     ).subscribe(status => {
 
       this.isOnline = status;
-      console.log(status ? '🟢 Online' : '🔴 Offline');
 
       // sync avec délai (évite multi déclenchement)
       if (status) {
