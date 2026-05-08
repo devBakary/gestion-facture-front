@@ -8,10 +8,13 @@ import { Observable } from 'rxjs';
 export class UtilisateurService {
 
   constructor(private http : HttpClient) { }
-  private api = 'http://localhost:8080/api/auth';
+  private api = 'https://gestion-facture-back-production.up.railway.app/api/auth';
 
   createUser(user: any):Observable<any> {
   return this.http.post(`${this.api}/user`, user);
+}
+ updateUser(user: any):Observable<any> {
+  return this.http.put(`${this.api}/me`, user);
 }
 
 getAll():Observable<any> {

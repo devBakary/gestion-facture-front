@@ -3,6 +3,7 @@ import { AuthServiceService } from '../../service/auth-service.service';
 import { CommonModule, Location } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
+import { UtilisateurService } from '../../service/utilisateur.service';
 
 @Component({
   selector: 'app-profil',
@@ -15,11 +16,11 @@ export class ProfilComponent {
 
   user: any = {};
   constructor(private authservice: AuthServiceService,
-    private router: Router
+    private router: Router,
+    private userService: UtilisateurService
   ){}
 
 ngOnInit() {
-  //  this.user = this.authservice.getUser();
   
    this.authservice.getMe().subscribe({
       next: (data) => {
@@ -31,6 +32,11 @@ ngOnInit() {
       }
     })
    
+}
+updateProfile() {
+  this.userService.updateUser(this.user).subscribe(() => {
+    alert("Profil mis à jour !");
+  });
 }
 
 logout() {

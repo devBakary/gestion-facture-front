@@ -8,7 +8,7 @@ import { Observable } from 'rxjs';
 })
 export class FacturesService {
 
-   private baseUrl = 'http://localhost:8080/api/factures';
+   private baseUrl = 'https://gestion-facture-back-production.up.railway.app/api/factures';
 
   constructor(private http: HttpClient) {}
 
