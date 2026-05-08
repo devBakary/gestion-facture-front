@@ -2,6 +2,8 @@ import { Component } from '@angular/core';
 import { Router, RouterModule } from '@angular/router';
 import { AuthServiceService } from '../../service/auth-service.service';
 import { CommonModule } from '@angular/common';
+import { merge, fromEvent, mapTo, of } from 'rxjs';
+import { OfflineSyncService } from '../../service/offline-sync.service';
 
 @Component({
   selector: 'app-sidebar',
@@ -12,12 +14,14 @@ import { CommonModule } from '@angular/common';
 })
 export class SidebarComponent {
   constructor(private router: Router,
-    private authService: AuthServiceService) { }
+    private authService: AuthServiceService,
+    private offlineSync: OfflineSyncService) { }
 
   user: any
   role: any
   simpleUser: boolean = false
   isOnline: boolean = navigator.onLine;
+  showOfflineBanner = false
 
   ngOnInit() {
     this.user = this.authService.getUser();
@@ -25,16 +29,25 @@ export class SidebarComponent {
     if (this.role == "ROLE_USER") {
       this.simpleUser = true
     }
-    // check la connexion
-    window.addEventListener('online', () => {
-      this.isOnline = true;
-      console.log('🟢 Connecté à Internet');
-    });
+    merge(
+      fromEvent(window, 'online').pipe(mapTo(true)),
+      fromEvent(window, 'offline').pipe(mapTo(false)),
+      of(navigator.onLine)
+    ).subscribe(status => {
+      this.isOnline = status;
+      if (!status) {
 
-    window.addEventListener('offline', () => {
-      this.isOnline = false;
-      console.log('🔴 Hors ligne');
+        this.showOfflineBanner = true;
+
+        // masquer après 4 secondes
+        setTimeout(() => {
+          this.showOfflineBanner = false;
+        }, 10000);
+      }
     });
+  }
+  hide(){
+    this.showOfflineBanner = false;
   }
 
   go(path: string) {

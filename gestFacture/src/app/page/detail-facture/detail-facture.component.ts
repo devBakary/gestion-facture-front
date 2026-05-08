@@ -90,9 +90,8 @@ export class DetailFactureComponent {
     this.service.deleteFacture(id).subscribe({
       next: () => {
         console.log('✔ supprimé');
-
-        // refresh liste
-        this.loadDocuments();
+        // this.loadDocuments();
+        this.goBack();
       },
       error: (err) => {
         console.log('❌ erreur suppression', err);

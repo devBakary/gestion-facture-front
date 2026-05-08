@@ -89,8 +89,38 @@ export class AddFacturesComponent {
       }))
     };
 
-    this.isLoading = true;
 
+    if (
+      this.nomClient.trim() === '' ||
+      this.telephone.trim() === '' ||
+      this.adresse.trim() === ''
+    ) {
+
+      Swal.fire({
+        icon: 'warning',
+        title: 'Champs requis',
+        text: 'Veuillez remplir tous les champs'
+      });
+
+      return;
+    }
+
+    // 🔥 validation lignes
+    const invalidLine = this.lignes.some(l =>
+      l.description.trim() === '' ||
+      l.quantite <= 0 ||
+      l.prix <= 0
+    );
+
+    if (invalidLine) {
+      Swal.fire({
+        icon: 'warning',
+        title: 'Ligne invalide',
+        text: 'Veuillez remplir correctement les articles'
+      });
+      return;
+    }
+    this.isLoading = true;
     Swal.fire({
       title: 'Enregistrement...',
       text: 'Veuillez patienter',
@@ -100,7 +130,6 @@ export class AddFacturesComponent {
 
     // ================= ONLINE =================
     if (this.isOnline) {
-
       this.service.createFacture(facture).subscribe({
         next: () => {
           this.isLoading = false;
@@ -111,15 +140,11 @@ export class AddFacturesComponent {
             title: 'Succès',
             text: 'Facture enregistrée'
           });
-
           this.resetForm();
         },
 
         error: () => {
-          console.log('❌ erreur API → fallback offline');
-
           this.offlineSync.saveOffline(facture);
-
           this.isLoading = false;
           Swal.close();
 
@@ -128,7 +153,6 @@ export class AddFacturesComponent {
             title: 'Hors ligne',
             text: 'Facture sauvegardée localement'
           });
-
           this.resetForm();
         }
       });

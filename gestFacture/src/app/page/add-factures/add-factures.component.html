@@ -25,7 +25,9 @@
         <div class="card">
             <div class="mb-1">
                 <label>Nom et Prenom du client</label>
-                <input type="text" placeholder="Ex: Mamady Camara" [(ngModel)]="nomClient">
+                <input type="text" placeholder="Ex: Mamady Camara" [(ngModel)]="nomClient" [ngClass]="{
+          'input-error': nomClient.trim() === ''
+        }">
             </div>
             <div class="mb-1">
                 <label>Numero de telephone</label>

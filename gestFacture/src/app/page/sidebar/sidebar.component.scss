@@ -31,10 +31,90 @@
   font-size: 20px;
 }
 
+
+//  je teste dabord
 .offline-banner {
-  background: #ff4d4f;
+  position: fixed;
+  top: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 90%;
+  max-width: 420px;
+  z-index: 9999;
+  animation: slideDown 0.4s ease;
+  animation: slideTop 0.4s ease-out;
+}
+
+
+.offline-content {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  background: linear-gradient(135deg,
+      #ff4d4d,
+      #e63946);
   color: white;
-  padding: 10px;
-  text-align: center;
-  font-weight: bold;
+  padding: 16px;
+  border-radius: 18px;
+  box-shadow:
+    0 8px 25px rgba(0, 0, 0, 0.2);
+}
+
+
+.wifi-icon {
+  width: 50px;
+  height: 50px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(255, 255, 255, 0.2);
+  border-radius: 50%;
+  font-size: 24px;
+  animation: pulse 1.5s infinite;
+}
+
+
+.offline-content h4 {
+  margin: 0;
+  font-size: 16px;
+  font-weight: 700;
+}
+
+.offline-content p {
+  margin: 4px 0 0 0;
+  font-size: 13px;
+  opacity: 0.9;
+}
+
+
+/* animation entrée */
+@keyframes slideDown {
+
+  from {
+    opacity: 0;
+    transform:
+      translateX(-50%) translateY(-20px);
+  }
+
+  to {
+    opacity: 1;
+    transform:
+      translateX(-50%) translateY(0);
+  }
+}
+
+/* animation icône */
+@keyframes pulse {
+
+  0% {
+    transform: scale(1);
+  }
+
+  50% {
+    transform: scale(1.1);
+  }
+
+  100% {
+    transform: scale(1);
+  }
 }

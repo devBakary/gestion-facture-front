@@ -1,9 +1,36 @@
  <main class="main-content">
         <router-outlet></router-outlet>
     </main>
-    <div *ngIf="!isOnline" class="offline-banner">
-  🔴 Pas de connexion Internet
+    <!-- ===================== -->
+<!-- OFFLINE BANNER -->
+<!-- ===================== -->
+
+<div
+  class="offline-banner" (click)="hide()"
+
+  *ngIf="showOfflineBanner"
+>
+
+  <div class="offline-content">
+
+    <div class="wifi-icon">
+      📡
+    </div>
+
+    <div>
+
+      <h4>Mode hors ligne</h4>
+
+      <p>
+        Vérifiez votre connexion Internet
+      </p>
+
+    </div>
+
+  </div>
+
 </div>
+  
 <div class="bottom-nav" *ngIf="simpleUser==true">
 
   <div class="nav-item" routerLink="/nav/home" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">
