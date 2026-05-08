@@ -18,7 +18,7 @@
 
 
     <div class="search">
-      <input type="text" placeholder="Rechercher client ou n°..." [(ngModel)]="searchTerm" (input)="applyFilter()" />
+      <input type="text" placeholder="Rechercher client ou n°..." [(ngModel)]="searchTerm" />
     </div>
 
   </div>
@@ -74,7 +74,7 @@
 
 
     </div>
-    <div class="text-center py-5" *ngIf="filteredFacture?.length === 0">
+    <div class="text-center py-5" *ngIf="filteredFactureList.length === 0">
 
       <p *ngIf="isOnline">
         Aucune facture disponible !
