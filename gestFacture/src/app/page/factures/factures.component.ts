@@ -21,6 +21,7 @@ export class FacturesComponent {
   facture: any
   factureId: any
   p: number = 1;
+  // activeFilter: string = 'TOUTES';
   filteredFacture: any
   searchTerm: string = ''
   selectionMode = false;
@@ -32,7 +33,7 @@ export class FacturesComponent {
     private router: Router,
     private offlineSync: OfflineSyncService
   ) { }
-  
+
   ngOnInit() {
     this.factureId = this.route.snapshot.params['id'];
     this.loadFactures();
@@ -85,11 +86,23 @@ export class FacturesComponent {
   }
 
 
-  activeFilter = 'Toutes';
+  activeFilter : string = 'TOUTES';
 
 
   setFilter(filter: string) {
     this.activeFilter = filter;
+  }
+  get filteredFactureList() {
+
+    if (!this.facture) return [];
+
+    if (this.activeFilter === 'TOUTES') {
+      return this.facture;
+    }
+
+    return this.facture.filter((f: any) =>
+      f.statut === this.activeFilter
+    );
   }
 
   // supprimer

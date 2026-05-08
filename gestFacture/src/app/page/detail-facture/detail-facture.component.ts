@@ -41,6 +41,22 @@ export class DetailFactureComponent {
       });
   }
 
+  changeStatut(id: number, statut: string) {
+  this.service.updateStatut(id, statut)
+    .subscribe({
+      next: () => {
+        console.log('✔ statut modifié');
+        
+        // refresh liste
+        this.loadDocuments();
+      },
+
+      error: (err) => {
+        console.log(err);
+      }
+    });
+}
+
   facture = {
     numero: 'F-2026-000',
     total: 1035000,

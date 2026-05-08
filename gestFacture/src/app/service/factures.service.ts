@@ -26,6 +26,13 @@ export class FacturesService {
     return this.http.get(`${this.baseUrl}`);
   }
 
+  updateStatut(id: number, statut: string) {
+
+  return this.http.put(
+    `${this.baseUrl}/${id}/statut?statut=${statut}`,
+    {}
+  );
+}
   deleteFacture(id: number) {
     return this.http.delete(`${this.baseUrl}/${id}`);
   }

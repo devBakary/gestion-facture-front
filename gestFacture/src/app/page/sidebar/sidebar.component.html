@@ -1,15 +1,11 @@
- <main class="main-content">
-        <router-outlet></router-outlet>
-    </main>
-    <!-- ===================== -->
+<main class="main-content">
+  <router-outlet></router-outlet>
+</main>
+<!-- ===================== -->
 <!-- OFFLINE BANNER -->
 <!-- ===================== -->
 
-<div
-  class="offline-banner" (click)="hide()"
-
-  *ngIf="showOfflineBanner"
->
+<div class="offline-banner" (click)="hide()" *ngIf="showOfflineBanner">
 
   <div class="offline-content">
 
@@ -30,7 +26,7 @@
   </div>
 
 </div>
-  
+
 <div class="bottom-nav" *ngIf="simpleUser==true">
 
   <div class="nav-item" routerLink="/nav/home" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">
@@ -56,10 +52,11 @@
 </div>
 
 
- <!-- pour l'admin -->
+<!-- pour l'admin -->
 <div class="bottom-nav" *ngIf="simpleUser==false">
 
-  <div class="nav-item" routerLink="/nav/list-user" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">
+  <div class="nav-item" routerLink="/nav/list-user" routerLinkActive="active"
+    [routerLinkActiveOptions]="{ exact: true }">
     <i class="icon">🏠</i>
     <span>Accueil</span>
   </div>

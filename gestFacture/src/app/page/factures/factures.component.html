@@ -3,19 +3,19 @@
   <!-- HEADER -->
   <div class="header py-4">
     <div class="top">
-       <h3>Factures</h3>
-    <div class="top-actions">
-      <button class="select-btn" (click)="toggleSelectionMode()">
-        {{ selectionMode ? 'Annuler' : 'Sélectionner' }}
-      </button>
+      <h3>Factures</h3>
+      <div class="top-actions">
+        <button class="select-btn" (click)="toggleSelectionMode()">
+          {{ selectionMode ? 'Annuler' : 'Sélectionner' }}
+        </button>
 
-      <!-- suppression multiple -->
-      <button *ngIf="selectedFactures.length > 0" class="delete-btn" (click)="deleteSelected()">
-        🗑 {{ selectedFactures.length }}
-      </button>
+        <!-- suppression multiple -->
+        <button *ngIf="selectedFactures.length > 0" class="delete-btn" (click)="deleteSelected()">
+          🗑 {{ selectedFactures.length }}
+        </button>
+      </div>
     </div>
-    </div>
-   
+
 
     <div class="search">
       <input type="text" placeholder="Rechercher client ou n°..." [(ngModel)]="searchTerm" (input)="applyFilter()" />
@@ -25,16 +25,26 @@
 
   <!-- FILTERS -->
   <div class="filters">
-    <button [class.active]="activeFilter === 'Toutes'" (click)="setFilter('Toutes')">Toutes</button>
+    <button (click)="setFilter('TOUTES')" [ngClass]="{ 'active': activeFilter === 'TOUTES' }">
+      Toutes
+    </button>
 
-    <button (click)="setFilter('Brouillon')">Brouillon</button>
-    <button (click)="setFilter('Envoyée')">Envoyée</button>
-    <button (click)="setFilter('Payée')">Payée</button>
+    <button (click)="setFilter('NON_PAYE')" [ngClass]="{ 'active': activeFilter === 'NON_PAYE' }">
+      Non payé
+    </button>
+
+    <button (click)="setFilter('PARTIELLEMENT_PAYE')" [ngClass]="{ 'active': activeFilter === 'PARTIELLEMENT_PAYE' }">
+      Partiel
+    </button>
+
+    <button (click)="setFilter('PAYE')" [ngClass]="{ 'active': activeFilter === 'PAYE' }">
+      Payé
+    </button>
   </div>
 
   <!-- LIST -->
   <div class="list">
-    <div class="item" *ngFor="let f of filteredFacture | paginate: { itemsPerPage: 8, currentPage: p } " [ngClass]="{
+    <div class="item" *ngFor="let f of filteredFactureList | paginate: { itemsPerPage: 8, currentPage: p } " [ngClass]="{
     'selected-card': isSelected(f.id)
   }" (click)="openDetail(f.id)">
 
