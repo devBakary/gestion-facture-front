@@ -48,7 +48,6 @@ export class HomeComponent {
       of(navigator.onLine)
     ).subscribe(status => {
       this.isOnline = status;
-      console.log(status ? '🟢 Online' : '🔴 Offline');
     });
   }
 

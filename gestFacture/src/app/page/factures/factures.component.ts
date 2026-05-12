@@ -135,7 +135,7 @@ export class FacturesComponent {
 
       this.service.deleteFacture(id).subscribe({
         next: () => this.loadFactures(),
-        error: (err) => console.log('❌ erreur suppression', err)
+        error: (err) => err
       });
 
     } else {

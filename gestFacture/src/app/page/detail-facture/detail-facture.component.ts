@@ -140,8 +140,6 @@ export class DetailFactureComponent {
 
     this.service.deleteFacture(id).subscribe({
       next: () => {
-        console.log('✔ supprimé');
-        // this.loadDocuments();
         this.goBack();
       },
       error: (err) => {
