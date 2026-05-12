@@ -55,6 +55,22 @@
       </div>
     </div>
 
+    <!-- demande de reinitialisation -->
+    <div class="recent-header">
+      <h3>Demande de reinitialisation de mot de passe</h3>
+    </div>
+    <div class="recent-item mb-3" *ngFor="let d of request">
+      <div>
+        <strong>{{ d?.name }}</strong>
+        <p>{{ d?.numero }}</p>
+      </div>
+
+      <div class="right">
+        <i (click)="resetPassword(d)"
+          class="bi bi-arrow-counterclockwise"></i>
+      </div>
+    </div>
+
   </div>
 
   <!-- FLOAT BUTTON -->

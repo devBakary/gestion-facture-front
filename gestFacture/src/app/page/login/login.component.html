@@ -15,6 +15,10 @@
       <input type="password" [(ngModel)]="form.password" placeholder="••••••">
     </div>
 
+    <p class="forgot-password" (click)="forgotPassword()">
+      Mot de passe oublié ?
+    </p>
+
     <p class="error" *ngIf="error">{{ error }}</p>
 
     <button (click)="login()" [disabled]="loading">

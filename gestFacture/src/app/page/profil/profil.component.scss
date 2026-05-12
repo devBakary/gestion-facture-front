@@ -1,7 +1,7 @@
 .profile-page {
-  background: #f2f2f2;  
+  background: #f2f2f2;
   padding-bottom: 80px;
-//   min-height: 100vh;
+  //   min-height: 100vh;
 }
 
 /* HEADER */
@@ -26,7 +26,7 @@
   margin: -30px 15px 20px;
   padding: 20px;
   border-radius: 20px;
-  box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
 }
 
 .card h3 {
@@ -69,8 +69,8 @@ input {
   padding: 18px;
   border-radius: 18px;
   margin: 20px;
-  padding: 20px!important;
-  box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+  padding: 20px !important;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
 }
 
 .sync-btn {
@@ -83,7 +83,7 @@ input {
 }
 
 /* LOGOUT */
-.logout {
+.logout, .u-passw {
   text-align: center;
   margin: 20px;
 }
@@ -94,6 +94,16 @@ input {
   border-radius: 14px;
   background: #ffe5e5;
   color: red;
+  border: none;
+  font-weight: bold;
+}
+
+.u-passw button {
+  width: 100%;
+  padding: 14px;
+  border-radius: 14px;
+  background: orange;
+  color: white;
   border: none;
   font-weight: bold;
 }

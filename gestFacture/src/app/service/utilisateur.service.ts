@@ -7,17 +7,40 @@ import { Observable } from 'rxjs';
 })
 export class UtilisateurService {
 
-  constructor(private http : HttpClient) { }
-  private api = 'https://gestion-facture-back-production.up.railway.app/api/auth';
+  constructor(private http: HttpClient) { }
+  // private api = 'https://gestion-facture-back-production.up.railway.app/api/auth';
+  private api = 'http://localhost:8080/api/auth';
+  createUser(user: any): Observable<any> {
+    return this.http.post(`${this.api}/user`, user);
+  }
+  updateUser(user: any): Observable<any> {
+    return this.http.put(`${this.api}/me`, user);
+  }
 
-  createUser(user: any):Observable<any> {
-  return this.http.post(`${this.api}/user`, user);
-}
- updateUser(user: any):Observable<any> {
-  return this.http.put(`${this.api}/me`, user);
+  changerMDP(data: any) {
+    return this.http.put(
+      `${this.api}/change-password`,
+      data
+    );
+  }
+
+  requestReset(username: string) {
+  return this.http.put(
+    `${this.api}/request-reset`,
+    {},
+    {
+      params: { username }
+    }
+  );
 }
 
-getAll():Observable<any> {
-  return this.http.get(`${this.api}/user`);
+  AdminReset(id: string) {
+  return this.http.put(
+    `${this.api}/admin/reset-password/${id}`,{}
+  );
 }
+
+  getAll(): Observable<any> {
+    return this.http.get(`${this.api}/user`);
+  }
 }

@@ -7,7 +7,8 @@ import { Observable } from 'rxjs';
 })
 export class AuthServiceService {
 
-  private api = 'https://gestion-facture-back-production.up.railway.app/api/auth';
+  // private api = 'https://gestion-facture-back-production.up.railway.app/api/auth';
+  private api = 'http://localhost:8080/api/auth';
 
   constructor(private http: HttpClient) { }
 
