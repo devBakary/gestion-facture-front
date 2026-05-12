@@ -35,7 +35,6 @@ export class HomeComponent {
     this.service.getMyFacture().subscribe((data: any) => {
       this.factures = data;
       this.facture = data.slice(-5).reverse();
-
       this.calculateTotals();
        this.loading = false;
     });

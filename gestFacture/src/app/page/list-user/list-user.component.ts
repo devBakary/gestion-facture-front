@@ -46,7 +46,6 @@ export class ListUserComponent {
          this.loading = false;
       },
       error: (err) => {
-        console.error(err);
          this.loading = false;
       }
     });

@@ -28,24 +28,19 @@ export class LoginComponent {
     private uservice: UtilisateurService
   ) { }
 
+
   login() {
     this.loading = true;
     this.error = '';
-    console.log(this.form)
 
     this.authService.login(this.form).subscribe({
 
       next: (res: any) => {
-        console.log("LOGIN RESPONSE BRUT :", res);
 
         this.authService.saveToken(res.token);
 
         this.authService.getMe().subscribe(user => {
-
-          console.log('USER CONNECTE:', user);
-
           this.authService.saveUser(user);
-
           this.router.navigate(['/nav/home']);
         });
 
