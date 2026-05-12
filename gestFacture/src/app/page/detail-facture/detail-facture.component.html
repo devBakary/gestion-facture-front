@@ -38,22 +38,22 @@
 
     <!-- STATUS -->
     <div class="status-list">
-        <button class="non-paye-btn" (click)="changeStatut(factures.id, 'NON_PAYE')" 
-        [disabled]="factures?.statut === 'NON_PAYE'" [ngClass]="{
+        <button class="non-paye-btn" (click)="changeStatut(factures.id, 'NON_PAYE')"
+            [disabled]="factures?.statut === 'NON_PAYE'" [ngClass]="{
       'active-non-paye': factures?.statut === 'NON_PAYE'
     }">
             Non payé
         </button>
 
         <button class="partiel-btn" (click)="changeStatut(factures.id, 'PARTIELLEMENT_PAYE')"
-        [disabled]="factures?.statut === 'PARTIELLEMENT_PAYE'" [ngClass]="{
+            [disabled]="factures?.statut === 'PARTIELLEMENT_PAYE'" [ngClass]="{
       'active-partiel': factures?.statut === 'PARTIELLEMENT_PAYE'
     }">
             Partiel
         </button>
 
-        <button class="paye-btn" (click)="changeStatut(factures.id, 'PAYE')"
-        [disabled]="factures?.statut === 'PAYE'" [ngClass]="{
+        <button class="paye-btn" (click)="changeStatut(factures.id, 'PAYE')" [disabled]="factures?.statut === 'PAYE'"
+            [ngClass]="{
       'active-paye': factures?.statut === 'PAYE'
     }">
             Payé

@@ -5,11 +5,12 @@ import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
 import { UtilisateurService } from '../../service/utilisateur.service';
 import Swal from 'sweetalert2';
+import { LoaderComponent } from '../../Config/loader/loader.component';
 
 @Component({
   selector: 'app-profil',
   standalone: true,
-  imports: [CommonModule, FormsModule],
+  imports: [CommonModule, FormsModule, LoaderComponent],
   templateUrl: './profil.component.html',
   styleUrl: './profil.component.scss'
 })
@@ -20,16 +21,16 @@ export class ProfilComponent {
     private router: Router,
     private userService: UtilisateurService
   ){}
-
+ loading = false;
 ngOnInit() {
-  
+   this.loading = true;
    this.authservice.getMe().subscribe({
       next: (data) => {
         this.user = data
-         console.log(this.user);
+         this.loading = false;
       },
       error: (err) => {
-        console.error(err);
+        this.loading = false;
       }
     })
    

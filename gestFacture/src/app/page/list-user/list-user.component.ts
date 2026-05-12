@@ -5,11 +5,12 @@ import { AuthServiceService } from '../../service/auth-service.service';
 import { FacturesService } from '../../service/factures.service';
 import { Router } from '@angular/router';
 import Swal from 'sweetalert2';
+import { LoaderComponent } from '../../Config/loader/loader.component';
 
 @Component({
   selector: 'app-list-user',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, LoaderComponent],
   templateUrl: './list-user.component.html',
   styleUrl: './list-user.component.scss'
 })
@@ -31,28 +32,32 @@ export class ListUserComponent {
   facture: any
   request: any
   id:any
+  loading = false;
   ngOnInit() {
+
+     this.loading = true;
     this.user = this.authservice.getUser();
 
     this.service.getAll().subscribe({
       next: (data) => {
         this.users = data.filter((u: { role: string; }) => u.role !== 'ADMIN').slice(-5).reverse();
         this.request = data.filter((u: { resetRequested: boolean; }) => u.resetRequested == true)
-        console.log(this.request);
-        
         this.stats.totalUsers = data.length;
+         this.loading = false;
       },
       error: (err) => {
         console.error(err);
+         this.loading = false;
       }
     });
 
     this.fservice.getAllFacture().subscribe({
       next: (data) => {
         this.facture = data;
+         this.loading = false;
       },
       error: (err) => {
-        console.error(err);
+         this.loading = false;
       }
     });
   }

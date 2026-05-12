@@ -5,11 +5,12 @@ import { Router } from '@angular/router';
 import { AuthServiceService } from '../../service/auth-service.service';
 import { fromEvent, merge, of } from 'rxjs';
 import { mapTo, startWith } from 'rxjs/operators';
+import { LoaderComponent } from '../../Config/loader/loader.component';
 
 @Component({
   selector: 'app-home',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, LoaderComponent],
   templateUrl: './home.component.html',
   styleUrl: './home.component.scss'
 })
@@ -21,19 +22,22 @@ export class HomeComponent {
   facture: any
   user: any
   isOnline: boolean = navigator.onLine;
+  loading = false;
   constructor(private service: FacturesService,
     private router: Router,
     private authservice: AuthServiceService
   ) { }
 
   ngOnInit() {
+    
     this.user = this.authservice.getUser();
-
+    this.loading = true;
     this.service.getMyFacture().subscribe((data: any) => {
       this.factures = data;
       this.facture = data.slice(-5).reverse();
 
       this.calculateTotals();
+       this.loading = false;
     });
     // check la connexion
     this.isOnline = navigator.onLine;

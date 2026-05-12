@@ -6,11 +6,12 @@ import { FormsModule } from '@angular/forms';
 import { NgxPaginationModule } from 'ngx-pagination';
 // import { Ng2SearchPipeModule } from 'ng2-search-filter/src/ng2-filter.module';
 import { Ng2SearchPipeModule } from 'ng2-search-filter';
+import { LoaderComponent } from '../../Config/loader/loader.component';
 
 @Component({
   selector: 'app-client',
   standalone: true,
-  imports: [CommonModule, FormsModule, NgxPaginationModule],
+  imports: [CommonModule, FormsModule, NgxPaginationModule, LoaderComponent],
   templateUrl: './client.component.html',
   styleUrl: './client.component.scss'
 })
@@ -21,15 +22,18 @@ export class ClientComponent {
   p: number = 1;
   filteredUsers: any[] = [];
   searchTerm: string = '';
+   loading = false;
 
   constructor(private service: FacturesService, private route: ActivatedRoute,
     private router: Router
   ) { }
   ngOnInit() {
+     this.loading = true;
     this.factureId = this.route.snapshot.params['id'];
     this.service.getMyFacture().subscribe((data: any) => {
       this.clients = data;
       this.applyFilter();
+       this.loading = false;
     })
   }
   applyFilter() {

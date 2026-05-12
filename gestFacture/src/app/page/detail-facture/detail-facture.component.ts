@@ -4,6 +4,7 @@ import { ActivatedRoute } from '@angular/router';
 import { FacturesService } from '../../service/factures.service';
 import { AuthServiceService } from '../../service/auth-service.service';
 import { Location } from '@angular/common';
+import { LoaderComponent } from '../../Config/loader/loader.component';
 
 @Component({
   selector: 'app-detail-facture',
@@ -45,36 +46,15 @@ export class DetailFactureComponent {
   this.service.updateStatut(id, statut)
     .subscribe({
       next: () => {
-        console.log('✔ statut modifié');
         
         // refresh liste
         this.loadDocuments();
       },
 
       error: (err) => {
-        console.log(err);
       }
     });
 }
-
-  facture = {
-    numero: 'F-2026-000',
-    total: 1035000,
-    client: 'Mariam Diallo',
-    phone: '90675432',
-    date: '21/04/2026',
-    statut: 'Payée',
-    article: 'Iphone 17 pro max',
-    quantite: 1,
-    prix: 1035000
-  };
-
-  statuts = [
-    'Brouillon',
-    'Envoyée',
-    'Payée',
-    'Annulée'
-  ];
 
   printFacture() {
     this.printMode = true;
@@ -110,7 +90,6 @@ export class DetailFactureComponent {
         this.goBack();
       },
       error: (err) => {
-        console.log('❌ erreur suppression', err);
       }
     });
 

@@ -8,11 +8,12 @@ import { fromEvent, merge, of } from 'rxjs';
 import { mapTo } from 'rxjs/operators';
 import { OfflineSyncService } from '../../service/offline-sync.service';
 import Swal from 'sweetalert2';
+import { LoaderComponent } from '../../Config/loader/loader.component';
 
 @Component({
   selector: 'app-factures',
   standalone: true,
-  imports: [CommonModule, FormsModule, NgxPaginationModule],
+  imports: [CommonModule, FormsModule, NgxPaginationModule, LoaderComponent],
   templateUrl: './factures.component.html',
   styleUrl: './factures.component.scss'
 })
@@ -30,6 +31,7 @@ export class FacturesComponent {
   selectedFactures: number[] = [];
 
   isOnline: boolean = navigator.onLine;
+   loading = false;
 
   constructor(
     private service: FacturesService,
@@ -41,7 +43,7 @@ export class FacturesComponent {
   ngOnInit() {
 
     this.factureId = this.route.snapshot.params['id'];
-
+    this.loading = true;
     this.loadFactures();
 
     merge(
@@ -68,11 +70,13 @@ export class FacturesComponent {
 
       this.service.getMyFacture().subscribe((data: any) => {
         this.facture = data || [];
+         this.loading = false;
       });
 
     } else {
 
       this.facture = this.offlineSync.getPending();
+       this.loading = false;
     }
   }
 

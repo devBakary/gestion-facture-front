@@ -16,14 +16,14 @@ export class UtilisateurService {
   updateUser(user: any): Observable<any> {
     return this.http.put(`${this.api}/me`, user);
   }
-
+// changer de mot de passe
   changerMDP(data: any) {
     return this.http.put(
       `${this.api}/change-password`,
       data
     );
   }
-
+// demande de reinitialisation
   requestReset(username: string) {
   return this.http.put(
     `${this.api}/request-reset`,
@@ -33,7 +33,7 @@ export class UtilisateurService {
     }
   );
 }
-
+// reinialisation par l'admin
   AdminReset(id: string) {
   return this.http.put(
     `${this.api}/admin/reset-password/${id}`,{}

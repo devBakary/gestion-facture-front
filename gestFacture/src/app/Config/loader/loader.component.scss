@@ -1,0 +1,66 @@
+.loading-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(255, 255, 255, 0.7);
+  backdrop-filter: blur(6px);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 999999;
+}
+
+.loader-box {
+  width: 230px;
+  padding: 30px 25px;
+  border-radius: 24px;
+  background: white;
+  text-align: center;
+
+  box-shadow:
+    0 10px 30px rgba(0, 0, 0, 0.08),
+    0 3px 10px rgba(0, 0, 0, 0.04);
+
+  animation: fadeIn .3s ease;
+}
+
+.spinner {
+  width: 55px;
+  height: 55px;
+  margin: auto;
+  border-radius: 50%;
+  border: 5px solid #e9edf7;
+  border-top: 5px solid #162a57;
+  animation: spin .8s linear infinite;
+}
+
+.loader-box h3 {
+  margin-top: 18px;
+  margin-bottom: 5px;
+  color: #162a57;
+  font-size: 18px;
+  font-weight: 700;
+}
+
+.loader-box p {
+  margin: 0;
+  color: #777;
+  font-size: 14px;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: scale(.95);
+  }
+
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
