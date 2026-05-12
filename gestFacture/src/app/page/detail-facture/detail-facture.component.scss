@@ -298,38 +298,28 @@
     }
 }
 
-// .statut-actions {
+/* INPUT EDIT */
+.edit-input {
+  width: 100%;
+  padding: 10px;
+  margin-top: 5px;
+  border: none;
+  border-radius: 10px;
+  background: #f2f4f8;
+  outline: none;
+}
 
-//   display: flex;
+.small-input {
+  max-width: 120px;
+}
+/* ACTION BUTTONS */
+.edit-actions {
+  margin-top: 15px;
+}
 
-//   gap: 8px;
-
-//   margin-top: 10px;
-// }
-
-// .statut-actions button {
-
-//   border: none;
-
-//   padding: 8px 12px;
-
-//   border-radius: 10px;
-
-//   cursor: pointer;
-
-//   color: white;
-
-//   font-size: 12px;
-// }
-
-// .non-paye-btn {
-//   background: #e74c3c;
-// }
-
-// .partiel-btn {
-//   background: #f39c12;
-// }
-
-// .paye-btn {
-//   background: #2ecc71;
-// }
+.action-btn {
+  width: 100%;
+  margin-bottom: 10px;
+  border-radius: 12px;
+  height: 45px;
+}

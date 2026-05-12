@@ -10,6 +10,7 @@ import { AddUserComponent } from './page/add-user/add-user.component';
 import { ListUserComponent } from './page/list-user/list-user.component';
 import { ProfilComponent } from './page/profil/profil.component';
 import { ClientComponent } from './page/client/client.component';
+import { UdateFactureComponent } from './page/udate-facture/udate-facture.component';
 
 export const routes: Routes = [
   {
@@ -38,6 +39,8 @@ export const routes: Routes = [
         path: "add-facture",
         component: AddFacturesComponent
       },
+      { path: 'facture/edit/:id',
+        component: UdateFactureComponent },
 
       {
         path: 'create-user',

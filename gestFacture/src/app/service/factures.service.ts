@@ -16,6 +16,15 @@ export class FacturesService {
     return this.http.post(this.baseUrl, facture);
   }
 
+  updateFacture(id: number, facture: any) {
+
+  return this.http.put(
+    `${this.baseUrl}/${id}`,
+    facture
+  );
+
+}
+
   getFacture(id: number) {
     return this.http.get(`${this.baseUrl}/${id}`);
   }

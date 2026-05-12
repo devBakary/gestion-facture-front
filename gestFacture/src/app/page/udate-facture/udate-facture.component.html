@@ -1,0 +1,89 @@
+<div class="page">
+
+  <!-- HEADER -->
+  <div class="header">
+
+    <button class="circle-btn back-btn" (click)="goBack()">
+      ←
+    </button>
+
+    <h3>Modifier facture</h3>
+
+    <button class="circle-btn save-btn" (click)="save()">
+      💾
+    </button>
+
+  </div>
+
+  <!-- FORM -->
+  <div class="form-container">
+
+    <!-- CLIENT -->
+    <div class="card">
+
+      <label>Nom et prénom du client</label>
+      <input type="text"
+             [(ngModel)]="facture.nomClient">
+
+      <label>Numéro de téléphone</label>
+      <input type="text"
+             [(ngModel)]="facture.telephone">
+
+      <label>Adresse</label>
+      <input type="text"
+             [(ngModel)]="facture.adresse">
+
+    </div>
+
+    <!-- ARTICLES -->
+    <div class="card">
+
+      <h4>Articles</h4>
+
+      <div class="line-card"
+           *ngFor="let ligne of facture.lignes; let i = index">
+
+        <small>LIGNE {{ i + 1 }}</small>
+
+        <input type="text"
+               placeholder="Désignation"
+               [(ngModel)]="ligne.description">
+
+        <div class="row">
+
+          <div>
+            <label>Quantité</label>
+            <input type="number"
+                   [(ngModel)]="ligne.quantite">
+          </div>
+
+          <div>
+            <label>Prix</label>
+            <input type="number"
+                   [(ngModel)]="ligne.prixUnitaire">
+          </div>
+
+        </div>
+
+        <div class="line-total">
+          = {{ ligne.quantite * ligne.prixUnitaire | number }} FCFA
+        </div>
+
+      </div>
+
+      <button class="add-line-btn" (click)="addLine()">
+        + Ajouter une ligne
+      </button>
+
+    </div>
+
+    <!-- TOTAL -->
+    <div class="card">
+      <div class="total-card">
+        TOTAL : {{ calculateTotal() | number }} FCFA
+      </div>
+    </div>
+
+  </div>
+
+</div>
