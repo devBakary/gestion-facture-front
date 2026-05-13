@@ -21,6 +21,7 @@ export const routes: Routes = [
   {
     path: "nav",
     component: SidebarComponent,
+     canActivate:[authGuard],
     children: [
       {
         path: "home",

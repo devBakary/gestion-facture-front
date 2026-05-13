@@ -31,7 +31,8 @@
             </div>
             <div class="mb-1">
                 <label>Numero de telephone</label>
-                <input type="text" placeholder="Ex: 79202020" [(ngModel)]="telephone">
+                <input type="text" maxlength="8" inputmode="numeric" placeholder="Ex: 79202020" [ngModel]="telephone"
+                    (ngModelChange)="onPhoneInput($event)">
             </div>
             <div>
                 <label>Adresse</label>

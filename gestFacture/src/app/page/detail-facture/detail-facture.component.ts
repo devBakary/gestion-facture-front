@@ -7,6 +7,7 @@ import { Location } from '@angular/common';
 import { LoaderComponent } from '../../Config/loader/loader.component';
 import Swal from 'sweetalert2';
 import { FormsModule } from '@angular/forms';
+  import html2canvas from 'html2canvas';
 
 @Component({
   selector: 'app-detail-facture',
@@ -147,4 +148,57 @@ export class DetailFactureComponent {
     });
 
   }
+
+
+
+async shareTicket() {
+
+  const ticket = document.getElementById('ticket');
+
+  if (!ticket) return;
+
+  const canvas = await html2canvas(ticket);
+
+  canvas.toBlob(async (blob) => {
+
+    if (!blob) return;
+
+    const file = new File(
+      [blob],
+      'facture.png',
+      { type: 'image/png' }
+    );
+
+    // partage mobile
+    if (navigator.share && navigator.canShare({
+
+      files: [file]
+
+    })) {
+
+      await navigator.share({
+
+        title: 'Facture',
+        text: 'Voici votre facture',
+        files: [file]
+
+      });
+
+    } else {
+
+      // fallback WhatsApp web
+      const url = URL.createObjectURL(blob);
+
+      window.open(
+        `https://wa.me/?text=${encodeURIComponent('Votre facture')}`,
+        '_blank'
+      );
+
+      window.open(url);
+
+    }
+
+  });
+
+}
 }

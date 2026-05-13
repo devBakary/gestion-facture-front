@@ -9,14 +9,14 @@
         <h4 class="pt-4">{{ factures?.numeroFacture }}</h4>
 
         <div>
-        <button class="circle-btn mx-2 edit-btn" (click)="router.navigate(['nav/facture/edit/', factures.id])">
-            <i class="bi bi-pencil-square"></i>
-        </button>
-        <button class="circle-btn delete-btn" (click)="deleteFacture(factures.id)">
-            🗑
-        </button>
+            <button class="circle-btn mx-2 edit-btn" (click)="router.navigate(['nav/facture/edit/', factures.id])">
+                <i class="bi bi-pencil-square"></i>
+            </button>
+            <button class="circle-btn delete-btn" (click)="deleteFacture(factures.id)">
+                🗑
+            </button>
         </div>
-        
+
     </div>
 
 
@@ -84,7 +84,7 @@
 
     </div>
 
-    <div class="actions no-print">
+    <div class="actions no-print" id="ticket">
         <button (click)="openTicket()">
             🖨 Imprimer ticket
         </button>
@@ -141,7 +141,11 @@
             <div class="actions">
                 <button (click)="printFacture()">🖨 Imprimer</button>
                 <button (click)="closeTicket()">Fermer</button>
+               
             </div>
+             <button class="share mt-2" (click)="shareTicket()">
+                    📲 Partager ticket
+                </button>
 
         </div>
 

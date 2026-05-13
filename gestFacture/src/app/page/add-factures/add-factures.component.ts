@@ -181,6 +181,10 @@ export class AddFacturesComponent {
     }
   }
 
+onPhoneInput(value: string) {
+  this.telephone = value.replace(/\D/g, '').slice(0, 8);
+}
+
   // 🔄 reset
   resetForm() {
     this.nomClient = '';
