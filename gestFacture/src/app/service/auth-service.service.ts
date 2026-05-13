@@ -7,8 +7,8 @@ import { Observable } from 'rxjs';
 })
 export class AuthServiceService {
 
-  private api = 'https://gestion-facture-back-production.up.railway.app/api/auth';
-  // private api = 'http://localhost:8080/api/auth';
+  // private api = 'https://gestion-facture-back-production.up.railway.app/api/auth';
+  private api = 'http://localhost:8080/api/auth';
 
   constructor(private http: HttpClient) { }
 
@@ -42,4 +42,15 @@ export class AuthServiceService {
     const user = localStorage.getItem('user');
     return user ? JSON.parse(user) : null;
   }
+
+  restoreSession(): Observable<any> | null {
+
+  const token = this.getToken();
+
+  if (!token) {
+    return null;
+  }
+
+  return this.getMe();
+}
 }

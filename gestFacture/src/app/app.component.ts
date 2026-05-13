@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { RouterModule, RouterOutlet } from '@angular/router';
+import { AuthServiceService } from './service/auth-service.service';
 
 @Component({
   selector: 'app-root',
@@ -10,4 +11,28 @@ import { RouterModule, RouterOutlet } from '@angular/router';
 })
 export class AppComponent {
   title = 'gestFacture';
+
+  constructor(private auth: AuthServiceService){}
+
+  ngOnInit(): void {
+
+  this.auth.restoreSession()?.subscribe({
+
+    next: (user) => {
+
+      this.auth.saveUser(user);
+
+      console.log('Session restaurée');
+
+    },
+
+    error: () => {
+
+      this.auth.logout();
+
+    }
+
+  });
+
+}
 }
